@@ -1,11 +1,20 @@
 // src/components/NewTabPage/Shortcuts.jsx
-import { Grid, Typography, Box, IconButton } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 
 const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   const [hoveredShortcut, setHoveredShortcut] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedShortcut, setSelectedShortcut] = useState(null);
 
   const handleMouseEnter = (shortcutId) => {
     setHoveredShortcut(shortcutId);
@@ -13,6 +22,26 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
 
   const handleMouseLeave = () => {
     setHoveredShortcut(null);
+  };
+
+  const handleMenuOpen = (event, shortcut) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedShortcut(shortcut);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedShortcut(null);
+  };
+
+  const handleEdit = () => {
+    onEdit(selectedShortcut);
+    handleMenuClose();
+  };
+
+  const handleRemove = () => {
+    onRemove(selectedShortcut.id);
+    handleMenuClose();
   };
 
   return (
@@ -73,7 +102,7 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
               {hoveredShortcut === shortcut.id && (
                 <IconButton
                   size="small"
-                  onClick={() => onEdit(shortcut)}
+                  onClick={(e) => handleMenuOpen(e, shortcut)}
                   sx={{
                     position: "absolute",
                     top: 8,
@@ -115,6 +144,15 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
           </Box>
         </Grid>
       </Grid>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <MenuItem onClick={handleRemove}>Remove</MenuItem>
+      </Menu>
     </Box>
   );
 };
