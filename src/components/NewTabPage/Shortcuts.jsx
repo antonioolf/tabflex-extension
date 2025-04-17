@@ -102,9 +102,13 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
               {hoveredShortcut === shortcut.id && (
                 <IconButton
                   size="small"
+                  aria-controls={
+                    anchorEl ? `shortcut-menu-${shortcut.id}` : undefined
+                  }
+                  aria-haspopup="true"
+                  aria-expanded={anchorEl ? "true" : undefined}
                   onClick={(e) => handleMenuOpen(e, shortcut)}
                   sx={{
-                    position: "absolute",
                     top: 8,
                     right: 8,
                   }}
@@ -149,14 +153,6 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
       >
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={handleRemove}>Remove</MenuItem>
