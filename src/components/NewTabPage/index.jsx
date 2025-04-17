@@ -28,7 +28,15 @@ const NewTabPage = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
       <Typography variant="h4" gutterBottom sx={{ mb: 4, textAlign: "center" }}>
         TabFlex
       </Typography>

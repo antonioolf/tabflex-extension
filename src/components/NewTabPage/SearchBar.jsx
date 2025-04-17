@@ -14,7 +14,11 @@ const SearchBar = () => {
   };
 
   return (
-    <Paper component="form" onSubmit={handleSearch} sx={{ mb: 4 }}>
+    <Paper
+      component="form"
+      onSubmit={handleSearch}
+      sx={{ mb: 4, width: "40%" }}
+    >
       <TextField
         fullWidth
         name="search"
