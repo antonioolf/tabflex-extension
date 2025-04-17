@@ -37,9 +37,11 @@ const NewTabPage = () => {
         height: "100vh",
       }}
     >
-      <Typography variant="h4" gutterBottom sx={{ mb: 4, textAlign: "center" }}>
-        TabFlex
-      </Typography>
+      <img
+        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+        alt="Google Logo"
+        style={{ marginBottom: "20px" }}
+      />
 
       <SearchBar />
 
