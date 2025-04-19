@@ -65,6 +65,18 @@ const ShortcutItemStyled = styled(Box)(({ theme }) => ({
   alignItems: "center",
   flexDirection: "column",
   cursor: "pointer",
+
+  // "& .shortcut-menu-button": {
+  //   display: "none",
+  // },
+
+  // "&:hover": {
+  //   backgroundColor: theme.palette.action.hover,
+
+  //   "& .shortcut-menu-button": {
+  //     display: "flex",
+  //   },
+  // },
 }));
 
 const ShortcutItem = ({
