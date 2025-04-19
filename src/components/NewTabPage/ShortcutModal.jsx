@@ -1,4 +1,3 @@
-// src/components/NewTabPage/ShortcutModal.jsx
 import {
   Dialog,
   DialogTitle,
@@ -7,6 +6,7 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
+import React from "react";
 import { useState, useEffect } from "react";
 
 const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {

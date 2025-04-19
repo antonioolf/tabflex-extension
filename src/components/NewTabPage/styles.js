@@ -1,4 +1,3 @@
-// src/components/NewTabPage/styles.js
 import { styled } from "@mui/material/styles";
 
 export const ShortcutButton = styled("div")(({ theme }) => ({

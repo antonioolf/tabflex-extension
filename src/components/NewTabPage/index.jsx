@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import Shortcuts from "./Shortcuts";
 import { useState } from "react";
 import ShortcutModal from "./ShortcutModal";
+import React from "react";
 
 const NewTabPage = () => {
   const { shortcuts, addShortcut, editShortcut, removeShortcut } =
