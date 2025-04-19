@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Snackbar, Alert } from "@mui/material";
 import { useShortcuts } from "../../hooks/useShortcuts";
 import SearchBar from "./SearchBar";
 import Shortcuts from "./Shortcuts";
@@ -11,6 +11,7 @@ const NewTabPage = () => {
     useShortcuts();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleEdit = (shortcut) => {
     setEditingShortcut(shortcut);
@@ -25,6 +26,11 @@ const NewTabPage = () => {
     }
     setModalOpen(false);
     setEditingShortcut(null);
+  };
+
+  const handleRemove = (shortcutId) => {
+    removeShortcut(shortcutId);
+    setSnackbarOpen(true);
   };
 
   return (
@@ -51,7 +57,7 @@ const NewTabPage = () => {
         shortcuts={shortcuts}
         onAdd={() => setModalOpen(true)}
         onEdit={handleEdit}
-        onRemove={removeShortcut}
+        onRemove={handleRemove}
       />
 
       <ShortcutModal
@@ -62,6 +68,14 @@ const NewTabPage = () => {
         }}
         onSubmit={handleSubmit}
         shortcut={editingShortcut}
+      />
+
+      <Snackbar
+        message="Shortcut removed"
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       />
     </Box>
   );

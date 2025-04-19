@@ -112,6 +112,7 @@ const ShortcutItem = ({ shortcut, onEdit, onRemove }) => {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const open = Boolean(menuAnchorEl);
   const handleClick = (event) => {
+    event.preventDefault();
     setMenuAnchorEl(event.currentTarget);
   };
   const closeMenu = () => {
