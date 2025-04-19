@@ -26,6 +26,8 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
   const handleSubmit = () => {
     if (name && url) {
       onSubmit({ name, url });
+      setName("");
+      setUrl("");
     }
   };
 
