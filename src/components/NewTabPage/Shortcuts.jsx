@@ -16,6 +16,7 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   return (
     <Box
       sx={{ width: "70%" }}
+      flexWrap={"wrap"}
       display={"flex"}
       flexDirection="row"
       justifyContent={"center"}

@@ -39,9 +39,9 @@ const NewTabPage = () => {
     >
       <Box sx={{ width: "270px" }}>
         <img
-          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+          src="logo.png"
           alt="Google Logo"
-          style={{ marginBottom: "20px" }}
+          style={{ marginBottom: "20px", width: "100%" }}
         />
       </Box>
 
