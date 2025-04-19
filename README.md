@@ -19,6 +19,14 @@ Unlike many alternatives, TabFlex is **open-source**, meaning anyone can contrib
 
 ---
 
+## 🧪 Demo
+
+Curious to see **TabFlex** in action before installing it?
+
+Check out the live demo hosted on GitHub Pages:
+
+🔗 **[tabflex-extension.github.io](https://antonioolf.github.io/tabflex-extension/)**
+
 ## 📸 Screenshots
 
 **Customizable grid layout with links and icons:**

@@ -9,8 +9,6 @@ const SearchBarStyled = styled(Paper)(({ theme }) => ({
   alignItems: "center",
   padding: theme.spacing(1),
   width: "40%",
-
-  // Circle
   borderRadius: "50px",
   marginBottom: theme.spacing(4),
 
