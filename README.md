@@ -1,6 +1,6 @@
 # TabFlex
 
-![TabFlex Logo](./images/icon.png)
+<img src="./images/icon.png" alt="TabFlex Logo" width="200" />
 
 **TabFlex** is a customizable and open-source new tab extension for Google Chrome.  
 It's designed to replace the default Chrome New Tab page with something **more functional**, **more beautiful**, and **completely yours**.
