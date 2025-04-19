@@ -12,10 +12,10 @@ export const useShortcuts = () => {
     } else {
       // Atalhos padrão
       const defaultShortcuts = [
-        { id: 1, name: "Play Console", url: "https://play.google.com/console" },
-        { id: 2, name: "DeepSeek", url: "https://www.deepseek.com" },
-        { id: 3, name: "Supabase", url: "https://supabase.com" },
-        { id: 4, name: "Admob", url: "https://admob.google.com" },
+        { id: 1, name: "YouTube", url: "https://www.youtube.com" },
+        { id: 2, name: "Gmail", url: "https://mail.google.com" },
+        { id: 3, name: "WhatsApp", url: "https://web.whatsapp.com" },
+        { id: 4, name: "Wikipedia", url: "https://www.wikipedia.org" },
       ];
       setShortcuts(defaultShortcuts);
       localStorage.setItem(

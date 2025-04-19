@@ -8,6 +8,7 @@ import {
   styled,
   Grid,
   Avatar,
+  Link,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -80,7 +81,7 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   );
 };
 
-const ShortcutItemStyled = styled(Box)(({ theme }) => ({
+const ShortcutItemStyled = styled(Link)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   minWidth: 112,
   minHeight: 112,
@@ -91,6 +92,8 @@ const ShortcutItemStyled = styled(Box)(({ theme }) => ({
   alignItems: "center",
   flexDirection: "column",
   cursor: "pointer",
+  textDecoration: "none",
+  color: theme.palette.text.primary,
 
   "& .shortcut-menu-button": {
     display: "none",
@@ -125,7 +128,7 @@ const ShortcutItem = ({ shortcut, onEdit, onRemove }) => {
   };
 
   return (
-    <ShortcutItemStyled>
+    <ShortcutItemStyled href={shortcut.url} rel="noopener noreferrer">
       <Avatar alt={shortcut.name} {...stringAvatar(shortcut.name)} />
 
       <IconButton
