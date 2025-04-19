@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import React from "react";
 
 const SearchBarStyled = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(1),
@@ -12,7 +13,7 @@ const SearchBarStyled = styled(Paper)(({ theme }) => ({
   // Circle
   borderRadius: "50px",
   marginBottom: theme.spacing(4),
-  backgroundColor: theme.palette.background.paper,
+
   boxShadow: theme.shadows[3],
 }));
 

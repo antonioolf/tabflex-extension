@@ -1,5 +1,4 @@
-// src/components/NewTabPage/index.jsx
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useShortcuts } from "../../hooks/useShortcuts";
 import SearchBar from "./SearchBar";
 import Shortcuts from "./Shortcuts";
@@ -34,15 +33,17 @@ const NewTabPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         height: "100vh",
+        paddingTop: "7%",
       }}
     >
-      <img
-        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-        alt="Google Logo"
-        style={{ marginBottom: "20px" }}
-      />
+      <Box sx={{ width: "270px" }}>
+        <img
+          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+          alt="Google Logo"
+          style={{ marginBottom: "20px" }}
+        />
+      </Box>
 
       <SearchBar />
 

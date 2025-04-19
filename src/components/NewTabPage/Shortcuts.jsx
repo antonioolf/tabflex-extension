@@ -14,36 +14,39 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   return (
-    <Grid container spacing={2}>
+    <Box
+      sx={{ width: "70%" }}
+      display={"flex"}
+      flexDirection="row"
+      justifyContent={"center"}
+    >
       {shortcuts.map((shortcut) => (
-        <Grid size={{ xs: 6, sm: 4, md: 3 }} key={shortcut.id}>
-          <ShortcutItem
-            shortcut={shortcut}
-            onEdit={onEdit}
-            onRemove={onRemove}
-          />
-        </Grid>
+        <ShortcutItem
+          key={shortcut.id}
+          shortcut={shortcut}
+          onEdit={onEdit}
+          onRemove={onRemove}
+        />
       ))}
 
-      <Grid size={{ xs: 6, sm: 4, md: 3 }} key={0}>
-        <ShortcutItemStyled
-          sx={{
-            textAlign: "center",
-            cursor: "pointer",
-            opacity: 0.7,
-            "&:hover": { opacity: 1 },
-          }}
-          onClick={onAdd}
-        >
-          <Avatar>
-            <AddIcon />
-          </Avatar>
-          <Typography lineHeight={1} mt={2}>
-            Add Shortcut
-          </Typography>
-        </ShortcutItemStyled>
-      </Grid>
-    </Grid>
+      <ShortcutItemStyled
+        key={0}
+        sx={{
+          textAlign: "center",
+          cursor: "pointer",
+          opacity: 0.7,
+          "&:hover": { opacity: 1 },
+        }}
+        onClick={onAdd}
+      >
+        <Avatar>
+          <AddIcon />
+        </Avatar>
+        <Typography lineHeight={1} mt={2}>
+          Add Shortcut
+        </Typography>
+      </ShortcutItemStyled>
+    </Box>
   );
 };
 
