@@ -47,6 +47,7 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
     <Box
       sx={{ width: "70%" }}
       flexWrap={"wrap"}
+      alignItems={"baseline"}
       display={"flex"}
       flexDirection="row"
       justifyContent={"center"}
@@ -83,8 +84,8 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
 
 const ShortcutItemStyled = styled(Link)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
-  minWidth: 112,
-  minHeight: 112,
+  width: 112,
+  height: 112,
   position: "relative",
   textAlign: "center",
   display: "flex",
