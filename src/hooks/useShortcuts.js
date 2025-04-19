@@ -43,7 +43,6 @@ export const useShortcuts = () => {
   };
 
   const removeShortcut = (id) => {
-    debugger;
     const newShortcuts = shortcuts.filter((s) => s.id !== id);
     saveShortcuts(newShortcuts);
   };

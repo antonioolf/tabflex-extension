@@ -25,31 +25,24 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
         </Grid>
       ))}
 
-      <Box
-        sx={{
-          textAlign: "center",
-          cursor: "pointer",
-          opacity: 0.7,
-          "&:hover": { opacity: 1 },
-        }}
-        onClick={onAdd}
-      >
-        <Box
+      <Grid size={{ xs: 6, sm: 4, md: 3 }} key={0}>
+        <ShortcutItemStyled
           sx={{
-            backgroundColor: "#f1f3f4",
-            borderRadius: "50%",
-            width: 48,
-            height: 48,
-            margin: "0 auto 8px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            textAlign: "center",
+            cursor: "pointer",
+            opacity: 0.7,
+            "&:hover": { opacity: 1 },
           }}
+          onClick={onAdd}
         >
-          <AddIcon />
-        </Box>
-        <Typography variant="body2">Add shortcut</Typography>
-      </Box>
+          <Avatar>
+            <AddIcon />
+          </Avatar>
+          <Typography lineHeight={1} mt={2}>
+            Add Shortcut
+          </Typography>
+        </ShortcutItemStyled>
+      </Grid>
     </Grid>
   );
 };
@@ -66,17 +59,17 @@ const ShortcutItemStyled = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   cursor: "pointer",
 
-  // "& .shortcut-menu-button": {
-  //   display: "none",
-  // },
+  "& .shortcut-menu-button": {
+    display: "none",
+  },
 
-  // "&:hover": {
-  //   backgroundColor: theme.palette.action.hover,
+  "&:hover": {
+    backgroundColor: theme.palette.action.hover,
 
-  //   "& .shortcut-menu-button": {
-  //     display: "flex",
-  //   },
-  // },
+    "& .shortcut-menu-button": {
+      display: "flex",
+    },
+  },
 }));
 
 const ShortcutItem = ({
