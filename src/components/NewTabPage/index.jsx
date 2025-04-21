@@ -1,6 +1,5 @@
 import { Box, Snackbar, Alert } from "@mui/material";
 import { useShortcuts } from "../../hooks/useShortcuts";
-import SearchBar from "./SearchBar";
 import Shortcuts from "./Shortcuts";
 import { useState } from "react";
 import ShortcutModal from "./ShortcutModal";
@@ -40,18 +39,16 @@ const NewTabPage = () => {
         flexDirection: "column",
         alignItems: "center",
         height: "100vh",
-        paddingTop: "7%",
+        paddingTop: "10%",
       }}
     >
       <Box sx={{ width: "270px" }}>
         <img
           src="logo.png"
           alt="Google Logo"
-          style={{ marginBottom: "20px", width: "100%" }}
+          style={{ marginBottom: "40px", width: "100%" }}
         />
       </Box>
-
-      <SearchBar />
 
       <Shortcuts
         shortcuts={shortcuts}

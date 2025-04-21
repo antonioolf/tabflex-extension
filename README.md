@@ -52,6 +52,8 @@ Check out the live demo hosted on GitHub Pages:
 
 Here's what we’re working on next:
 
+### Macro
+
 - [ ] Custom backgrounds (images, colors, or solid themes)
 - [ ] Light & Dark themes (system-aware)
 - [ ] Drag-and-drop rearrangement
@@ -63,6 +65,13 @@ Here's what we’re working on next:
 - [ ] i18n (multi-language support)
 - [ ] Accessibility enhancements
 - [ ] Mobile browser support (if possible)
+
+### Micro
+
+- [ ] Responsivity
+- [ ] Add a slot for links in the header (e.g. email)
+- [ ] Add a settings button
+- [ ] Add a change theme button
 
 ---
 
