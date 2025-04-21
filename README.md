@@ -29,11 +29,7 @@ Check out the live demo hosted on GitHub Pages:
 
 ## 📸 Screenshots
 
-**Customizable grid layout with links and icons:**
-
 ![Screenshot 1](./images/screnshot1.png)
-
-**Personalized background, icon styles, and more:**
 
 ![Screenshot 2](./images/screnshot2.png)
 
