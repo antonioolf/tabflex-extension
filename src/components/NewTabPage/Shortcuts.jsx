@@ -82,6 +82,15 @@ const Shortcuts = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   );
 };
 
+const AvatarStyled = styled(Avatar)(({ theme }) => ({
+  width: 48,
+  height: 48,
+  "& img": {
+    width: "70%",
+    height: "70%",
+  },
+}));
+
 const ShortcutItemStyled = styled(Link)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   width: 112,
@@ -129,9 +138,18 @@ const ShortcutItem = ({ shortcut, onEdit, onRemove }) => {
     onRemove(shortcut);
   };
 
+  const getIcon = (url) => {
+    const domain = new URL(url).hostname.replace("www.", "");
+    return `https://www.google.com/s2/favicons?sz=64&domain_url=${domain}`;
+  };
+
   return (
     <ShortcutItemStyled href={shortcut.url} rel="noopener noreferrer">
-      <Avatar alt={shortcut.name} {...stringAvatar(shortcut.name)} />
+      <AvatarStyled
+        src={getIcon(shortcut.url)}
+        alt={shortcut.name}
+        {...stringAvatar(shortcut.name)}
+      />
 
       <IconButton
         className="shortcut-menu-button"

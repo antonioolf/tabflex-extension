@@ -45,7 +45,7 @@ const NewTabPage = () => {
       <Box sx={{ width: "270px" }}>
         <img
           src="logo.png"
-          alt="Google Logo"
+          alt="TabFlex logo"
           style={{ marginBottom: "40px", width: "100%" }}
         />
       </Box>
