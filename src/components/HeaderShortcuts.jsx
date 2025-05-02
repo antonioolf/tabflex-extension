@@ -35,7 +35,6 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
           key={shortcut.id}
           component="a"
           href={shortcut.url}
-          target="_blank"
           rel="noopener noreferrer"
           sx={{
             color: "text.primary",
@@ -77,7 +76,6 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
             key={shortcut.id}
             component="a"
             href={shortcut.url}
-            target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
               handleClose();
