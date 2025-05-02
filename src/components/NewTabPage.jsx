@@ -1,14 +1,17 @@
-import { Box, Snackbar, IconButton, Drawer, Typography } from "@mui/material";
+import { Box, Snackbar, IconButton } from "@mui/material";
 import {
   Bookmark as BookmarkIcon,
   Widgets as WidgetsIcon,
   Palette as PaletteIcon,
 } from "@mui/icons-material";
-import { useShortcuts } from "../../hooks/useShortcuts";
+import { useShortcuts } from "../hooks/useShortcuts";
 import Shortcuts from "./Shortcuts";
 import { useState } from "react";
 import ShortcutModal from "./ShortcutModal";
+import BookmarkDrawer from "./BookmarkDrawer";
 import React from "react";
+import ThemeDrawer from "./ThemeDrawer";
+import WidgetDrawer from "./WidgetDrawer";
 
 const NewTabPage = () => {
   const { shortcuts, addShortcut, editShortcut, removeShortcut } =
@@ -66,20 +69,6 @@ const NewTabPage = () => {
         <BookmarkIcon />
       </IconButton>
 
-      {/* Drawer de Bookmarks */}
-      <Drawer
-        anchor="left"
-        open={bookmarksOpen}
-        onClose={() => setBookmarksOpen(false)}
-      >
-        <Box sx={{ width: 250, p: 3 }}>
-          <Typography variant="h6">Bookmarks</Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Aqui serão exibidos seus bookmarks no futuro.
-          </Typography>
-        </Box>
-      </Drawer>
-
       {/* Botão de Widgets (canto inferior esquerdo) */}
       <IconButton
         sx={{
@@ -92,20 +81,6 @@ const NewTabPage = () => {
       >
         <WidgetsIcon />
       </IconButton>
-
-      {/* Drawer de Widgets */}
-      <Drawer
-        anchor="left"
-        open={widgetsOpen}
-        onClose={() => setWidgetsOpen(false)}
-      >
-        <Box sx={{ width: 250, p: 3 }}>
-          <Typography variant="h6">Widgets</Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Aqui serão exibidos widgets personalizados no futuro.
-          </Typography>
-        </Box>
-      </Drawer>
 
       {/* Botão de Customização de Tema (canto inferior direito) */}
       <IconButton
@@ -120,19 +95,15 @@ const NewTabPage = () => {
         <PaletteIcon />
       </IconButton>
 
-      {/* Drawer de Customização de Tema */}
-      <Drawer
-        anchor="right"
-        open={themeOpen}
-        onClose={() => setThemeOpen(false)}
-      >
-        <Box sx={{ width: 250, p: 3 }}>
-          <Typography variant="h6">Customização de Tema</Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Aqui você poderá personalizar o tema da aplicação no futuro.
-          </Typography>
-        </Box>
-      </Drawer>
+      {/* Componentes dos Drawers */}
+      <BookmarkDrawer
+        open={bookmarksOpen}
+        onClose={() => setBookmarksOpen(false)}
+      />
+
+      <WidgetDrawer open={widgetsOpen} onClose={() => setWidgetsOpen(false)} />
+
+      <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
 
       {/* Conteúdo principal */}
       <Box sx={{ width: "270px" }}>

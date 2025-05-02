@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import NewTabPage from "./components/NewTabPage/index.jsx";
+import NewTabPage from "./components/NewTabPage.jsx";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
 const theme = createTheme({
