@@ -12,38 +12,24 @@ import BookmarkDrawer from "./BookmarkDrawer";
 import React from "react";
 import ThemeDrawer from "./ThemeDrawer";
 import WidgetDrawer from "./WidgetDrawer";
+import HeaderShortcuts from "./HeaderShortcuts"; // Nova importação
 
 const NewTabPage = () => {
-  const { shortcuts, addShortcut, editShortcut, removeShortcut } =
-    useShortcuts();
+  const {
+    shortcuts,
+    headerShortcuts, // Novo estado
+    addShortcut,
+    editShortcut,
+    removeShortcut,
+    toggleHeaderFixed, // Nova função
+  } = useShortcuts();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-  // Estados para os drawers
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [widgetsOpen, setWidgetsOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
-
-  const handleEdit = (shortcut) => {
-    setEditingShortcut(shortcut);
-    setModalOpen(true);
-  };
-
-  const handleSubmit = (shortcut) => {
-    if (editingShortcut) {
-      editShortcut(editingShortcut.id, shortcut);
-    } else {
-      addShortcut(shortcut);
-    }
-    setModalOpen(false);
-    setEditingShortcut(null);
-  };
-
-  const handleRemove = (shortcutId) => {
-    removeShortcut(shortcutId);
-    setSnackbarOpen(true);
-  };
 
   return (
     <Box
@@ -56,6 +42,12 @@ const NewTabPage = () => {
         position: "relative",
       }}
     >
+      {/* Adicionar HeaderShortcuts no topo direito */}
+      <HeaderShortcuts
+        headerShortcuts={headerShortcuts}
+        toggleFixed={toggleHeaderFixed}
+      />
+
       {/* Botão de Bookmarks (canto superior esquerdo) */}
       <IconButton
         sx={{
@@ -117,8 +109,14 @@ const NewTabPage = () => {
       <Shortcuts
         shortcuts={shortcuts}
         onAdd={() => setModalOpen(true)}
-        onEdit={handleEdit}
-        onRemove={handleRemove}
+        onEdit={(shortcut) => {
+          setEditingShortcut(shortcut);
+          setModalOpen(true);
+        }}
+        onRemove={(shortcutId) => {
+          removeShortcut(shortcutId);
+          setSnackbarOpen(true);
+        }}
       />
 
       <ShortcutModal
@@ -127,7 +125,15 @@ const NewTabPage = () => {
           setModalOpen(false);
           setEditingShortcut(null);
         }}
-        onSubmit={handleSubmit}
+        onSubmit={(shortcut) => {
+          if (editingShortcut) {
+            editShortcut(editingShortcut.id, shortcut);
+          } else {
+            addShortcut(shortcut);
+          }
+          setModalOpen(false);
+          setEditingShortcut(null);
+        }}
         shortcut={editingShortcut}
       />
 
