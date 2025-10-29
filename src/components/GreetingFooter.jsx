@@ -17,8 +17,33 @@ const GreetingFooter = () => {
       setUserName(savedUserName);
     }
 
-    return () => clearInterval(timer);
-  }, []);
+    // Listener para mudanças no localStorage
+    const handleStorageChange = (e) => {
+      if (e.key === "tabflex-user-name") {
+        setUserName(e.newValue || "Usuário");
+      }
+    };
+
+    // Adicionar listener para mudanças no localStorage de outras abas/componentes
+    window.addEventListener("storage", handleStorageChange);
+
+    // Função para detectar mudanças no localStorage da mesma aba
+    const checkUserName = () => {
+      const currentUserName = localStorage.getItem("tabflex-user-name");
+      if (currentUserName && currentUserName !== userName) {
+        setUserName(currentUserName);
+      }
+    };
+
+    // Verificar mudanças no localStorage a cada segundo (para mesma aba)
+    const userNameChecker = setInterval(checkUserName, 1000);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(userNameChecker);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [userName]);
 
   const getGreeting = (hour) => {
     if (hour < 12) {
