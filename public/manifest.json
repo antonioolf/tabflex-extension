@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TabFlex",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "A customizable new tab page for Chrome",
   "chrome_url_overrides": {
     "newtab": "index.html"
