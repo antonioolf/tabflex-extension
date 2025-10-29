@@ -1,5 +1,5 @@
 // src/components/SidebarWidgets.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -7,20 +7,18 @@ import {
   CardContent,
   TextField,
   IconButton,
-} from '@mui/material';
-import {
-  WbSunny,
-  Cloud,
-  CloudySnowing,
-  Edit,
-  Save,
-} from '@mui/icons-material';
+} from "@mui/material";
+import { WbSunny, Cloud, CloudySnowing, Edit, Save } from "@mui/icons-material";
 
 const SidebarWidgets = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [notes, setNotes] = useState('Comprar leite');
+  const [notes, setNotes] = useState("Comprar leite");
   const [isEditingNotes, setIsEditingNotes] = useState(false);
-  const [weather] = useState({ temp: 20, condition: 'sunny', city: 'São Paulo' });
+  const [weather] = useState({
+    temp: 20,
+    condition: "sunny",
+    city: "São Paulo",
+  });
 
   // Atualizar o relógio a cada minuto
   useEffect(() => {
@@ -31,37 +29,37 @@ const SidebarWidgets = () => {
   }, []);
 
   const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: true,
     });
   };
 
   const getWeatherIcon = (condition) => {
     switch (condition) {
-      case 'sunny':
-        return <WbSunny sx={{ color: '#ffc107' }} />;
-      case 'cloudy':
-        return <Cloud sx={{ color: '#90a4ae' }} />;
-      case 'snowy':
-        return <CloudySnowing sx={{ color: '#81c784' }} />;
+      case "sunny":
+        return <WbSunny sx={{ color: "#ffc107" }} />;
+      case "cloudy":
+        return <Cloud sx={{ color: "#90a4ae" }} />;
+      case "snowy":
+        return <CloudySnowing sx={{ color: "#81c784" }} />;
       default:
-        return <WbSunny sx={{ color: '#ffc107' }} />;
+        return <WbSunny sx={{ color: "#ffc107" }} />;
     }
   };
 
   const handleNotesEdit = () => {
     if (isEditingNotes) {
       // Salvar as notas
-      localStorage.setItem('tabflex-notes', notes);
+      localStorage.setItem("tabflex-notes", notes);
     }
     setIsEditingNotes(!isEditingNotes);
   };
 
   // Carregar notas salvas
   useEffect(() => {
-    const savedNotes = localStorage.getItem('tabflex-notes');
+    const savedNotes = localStorage.getItem("tabflex-notes");
     if (savedNotes) {
       setNotes(savedNotes);
     }
@@ -70,11 +68,11 @@ const SidebarWidgets = () => {
   return (
     <Box
       sx={{
-        position: 'absolute',
+        position: "absolute",
         left: 32,
-        top: '15%',
-        display: 'flex',
-        flexDirection: 'column',
+        top: "15%",
+        display: "flex",
+        flexDirection: "column",
         gap: 2,
         width: 200,
       }}
@@ -82,11 +80,11 @@ const SidebarWidgets = () => {
       {/* Widget de Relógio */}
       <Card
         sx={{
-          bgcolor: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
+          bgcolor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         <CardContent sx={{ p: 2 }}>
@@ -94,7 +92,7 @@ const SidebarWidgets = () => {
             variant="h4"
             sx={{
               fontWeight: 600,
-              color: 'text.primary',
+              color: "text.primary",
               mb: 0.5,
             }}
           >
@@ -103,7 +101,7 @@ const SidebarWidgets = () => {
           <Typography
             variant="body2"
             sx={{
-              color: 'text.secondary',
+              color: "text.secondary",
             }}
           >
             São Paulo
@@ -114,21 +112,21 @@ const SidebarWidgets = () => {
       {/* Widget de Clima */}
       <Card
         sx={{
-          bgcolor: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
+          bgcolor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         <CardContent sx={{ p: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
             {getWeatherIcon(weather.condition)}
             <Typography
               variant="h5"
               sx={{
                 fontWeight: 600,
-                color: 'text.primary',
+                color: "text.primary",
               }}
             >
               {weather.temp}°C
@@ -137,7 +135,7 @@ const SidebarWidgets = () => {
           <Typography
             variant="body2"
             sx={{
-              color: 'text.secondary',
+              color: "text.secondary",
             }}
           >
             {weather.city}
@@ -148,33 +146,36 @@ const SidebarWidgets = () => {
       {/* Widget de Notas Rápidas */}
       <Card
         sx={{
-          bgcolor: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
+          bgcolor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         <CardContent sx={{ p: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1,
+            }}
+          >
             <Typography
               variant="subtitle1"
               sx={{
                 fontWeight: 600,
-                color: 'text.primary',
+                color: "text.primary",
               }}
             >
               Quick Notes
             </Typography>
-            <IconButton
-              size="small"
-              onClick={handleNotesEdit}
-              sx={{ p: 0.5 }}
-            >
+            <IconButton size="small" onClick={handleNotesEdit} sx={{ p: 0.5 }}>
               {isEditingNotes ? <Save /> : <Edit />}
             </IconButton>
           </Box>
-          
+
           {isEditingNotes ? (
             <TextField
               fullWidth
@@ -185,8 +186,8 @@ const SidebarWidgets = () => {
               variant="outlined"
               size="small"
               sx={{
-                '& .MuiOutlinedInput-root': {
-                  fontSize: '0.875rem',
+                "& .MuiOutlinedInput-root": {
+                  fontSize: "0.875rem",
                 },
               }}
             />
@@ -194,9 +195,9 @@ const SidebarWidgets = () => {
             <Typography
               variant="body2"
               sx={{
-                color: 'text.secondary',
-                minHeight: '3em',
-                whiteSpace: 'pre-wrap',
+                color: "text.secondary",
+                minHeight: "3em",
+                whiteSpace: "pre-wrap",
               }}
             >
               {notes}

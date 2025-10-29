@@ -1,13 +1,10 @@
 // src/components/GreetingFooter.jsx
-import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-} from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { Box, Typography } from "@mui/material";
 
 const GreetingFooter = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [userName] = useState('João'); // Por enquanto fixo, pode ser configurável futuramente
+  const [userName] = useState("João"); // Por enquanto fixo, pode ser configurável futuramente
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -19,22 +16,22 @@ const GreetingFooter = () => {
 
   const getGreeting = (hour) => {
     if (hour < 12) {
-      return 'Bom dia';
+      return "Bom dia";
     } else if (hour < 18) {
-      return 'Boa tarde';
+      return "Boa tarde";
     } else {
-      return 'Boa noite';
+      return "Boa noite";
     }
   };
 
   const formatDate = (date) => {
     const options = {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
+      weekday: "long",
+      day: "numeric",
+      month: "long",
     };
-    
-    return date.toLocaleDateString('pt-BR', options);
+
+    return date.toLocaleDateString("pt-BR", options);
   };
 
   const currentHour = currentDateTime.getHours();
@@ -44,18 +41,18 @@ const GreetingFooter = () => {
   return (
     <Box
       sx={{
-        position: 'fixed',
+        position: "fixed",
         bottom: 32,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        textAlign: 'center',
+        left: "50%",
+        transform: "translateX(-50%)",
+        textAlign: "center",
       }}
     >
       <Typography
         variant="body1"
         sx={{
-          color: 'text.secondary',
-          fontSize: '1rem',
+          color: "text.secondary",
+          fontSize: "1rem",
           fontWeight: 400,
         }}
       >
@@ -64,8 +61,8 @@ const GreetingFooter = () => {
       <Typography
         variant="h6"
         sx={{
-          color: 'text.primary',
-          fontSize: '1.1rem',
+          color: "text.primary",
+          fontSize: "1.1rem",
           fontWeight: 500,
           mt: 0.5,
         }}

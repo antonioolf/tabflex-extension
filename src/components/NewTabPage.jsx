@@ -13,12 +13,8 @@ import SearchBar from "./SearchBar";
 import GreetingFooter from "./GreetingFooter";
 
 const NewTabPage = () => {
-  const {
-    shortcuts,
-    addShortcut,
-    editShortcut,
-    removeShortcut,
-  } = useShortcuts();
+  const { shortcuts, addShortcut, editShortcut, removeShortcut } =
+    useShortcuts();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState(null);
@@ -78,16 +74,10 @@ const NewTabPage = () => {
         open={bookmarksOpen}
         onClose={() => setBookmarksOpen(false)}
       />
-      
-      <ThemeDrawer
-        open={themeOpen}
-        onClose={() => setThemeOpen(false)}
-      />
 
-      <WidgetDrawer
-        open={widgetsOpen}
-        onClose={() => setWidgetsOpen(false)}
-      />
+      <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
+
+      <WidgetDrawer open={widgetsOpen} onClose={() => setWidgetsOpen(false)} />
 
       {/* Legacy Modal - manter para compatibilidade */}
       <ShortcutModal
