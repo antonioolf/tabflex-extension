@@ -66,10 +66,8 @@ const NewTabPage = () => {
         headerShortcuts={headerShortcuts}
         toggleHeaderFixed={toggleHeaderFixed}
       />
-
-      {/* Sidebar Widgets */}
-      <SidebarWidgets />
-
+      {/* Widgets da barra lateral */}
+      <SidebarWidgets onBookmarksClick={() => setBookmarksOpen(true)} />{" "}
       {/* Main Content */}
       <Box
         sx={{
@@ -83,7 +81,7 @@ const NewTabPage = () => {
       >
         {/* App Grid with integrated shortcuts */}
         <Box sx={{ mb: 4 }}>
-          <AppGrid 
+          <AppGrid
             shortcuts={shortcuts}
             onAdd={() => setModalOpen(true)}
             onEdit={(shortcut) => {
@@ -100,20 +98,15 @@ const NewTabPage = () => {
         {/* Search Bar */}
         <SearchBar />
       </Box>
-
       {/* Greeting Footer */}
       <GreetingFooter />
-
       {/* Drawers */}
       <BookmarkDrawer
         open={bookmarksOpen}
         onClose={() => setBookmarksOpen(false)}
       />
-
       <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
-
       <WidgetDrawer open={widgetsOpen} onClose={() => setWidgetsOpen(false)} />
-
       {/* Legacy Modal - manter para compatibilidade */}
       <ShortcutModal
         open={modalOpen}
@@ -133,14 +126,12 @@ const NewTabPage = () => {
         }}
         shortcut={editingShortcut}
       />
-
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         message="Shortcut saved successfully!"
       />
-
       {/* Onboarding Dialog */}
       <OnboardingDialog
         open={onboardingOpen}

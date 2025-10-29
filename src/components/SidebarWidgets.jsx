@@ -7,10 +7,18 @@ import {
   CardContent,
   TextField,
   IconButton,
+  Button,
 } from "@mui/material";
-import { WbSunny, Cloud, CloudySnowing, Edit, Save } from "@mui/icons-material";
+import {
+  WbSunny,
+  Cloud,
+  CloudySnowing,
+  Edit,
+  Save,
+  BookmarkBorder,
+} from "@mui/icons-material";
 
-const SidebarWidgets = () => {
+const SidebarWidgets = ({ onBookmarksClick }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [notes, setNotes] = useState("Comprar leite");
   const [isEditingNotes, setIsEditingNotes] = useState(false);
@@ -205,6 +213,30 @@ const SidebarWidgets = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Botão de Bookmarks */}
+      <Button
+        variant="outlined"
+        startIcon={<BookmarkBorder />}
+        onClick={onBookmarksClick}
+        sx={{
+          bgcolor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 4,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          color: "text.primary",
+          textTransform: "none",
+          fontWeight: 500,
+          py: 1.5,
+          "&:hover": {
+            bgcolor: "rgba(255, 255, 255, 1)",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.15)",
+          },
+        }}
+      >
+        Bookmarks
+      </Button>
     </Box>
   );
 };
