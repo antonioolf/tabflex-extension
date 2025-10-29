@@ -97,15 +97,6 @@ const NewTabPage = () => {
 
       <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
 
-      {/* Conteúdo principal */}
-      <Box sx={{ width: "270px" }}>
-        <img
-          src="logo.png"
-          alt="TabFlex logo"
-          style={{ marginBottom: "40px", width: "100%" }}
-        />
-      </Box>
-
       <Shortcuts
         shortcuts={shortcuts}
         onAdd={() => setModalOpen(true)}
