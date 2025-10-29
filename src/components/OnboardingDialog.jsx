@@ -1,5 +1,5 @@
 // src/components/OnboardingDialog.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
   CardContent,
   Avatar,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Star,
   Apps,
@@ -25,31 +25,43 @@ import {
   StickyNote2,
   ArrowForward,
   ArrowBack,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 const OnboardingDialog = ({ open, onClose, onComplete }) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
 
   const steps = [
     {
-      title: 'Bem-vindo ao TabFlex!',
+      title: "Bem-vindo ao TabFlex!",
       content: (
-        <Box sx={{ textAlign: 'center', py: 3 }}>
-          <Typography variant="h4" gutterBottom color="primary" sx={{ fontWeight: 600 }}>
+        <Box sx={{ textAlign: "center", py: 3 }}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            color="primary"
+            sx={{ fontWeight: 600 }}
+          >
             🚀 TabFlex Extension
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 3, maxWidth: 400, mx: 'auto' }}>
-            Transforme sua nova aba em um hub de produtividade personalizado com widgets inteligentes e acesso rápido aos seus sites favoritos.
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 3, maxWidth: 400, mx: "auto" }}
+          >
+            Transforme sua nova aba em um hub de produtividade personalizado com
+            widgets inteligentes e acesso rápido aos seus sites favoritos.
           </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
+          <Box
+            sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}
+          >
+            <Avatar sx={{ bgcolor: "primary.main" }}>
               <Apps />
             </Avatar>
-            <Avatar sx={{ bgcolor: 'success.main' }}>
+            <Avatar sx={{ bgcolor: "success.main" }}>
               <Search />
             </Avatar>
-            <Avatar sx={{ bgcolor: 'warning.main' }}>
+            <Avatar sx={{ bgcolor: "warning.main" }}>
               <Star />
             </Avatar>
           </Box>
@@ -57,16 +69,22 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
       ),
     },
     {
-      title: 'Widgets Inteligentes',
+      title: "Widgets Inteligentes",
       content: (
         <Box sx={{ py: 2 }}>
-          <Typography variant="h6" gutterBottom sx={{ textAlign: 'center', mb: 3 }}>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{ textAlign: "center", mb: 3 }}
+          >
             Widgets que funcionam para você
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Card variant="outlined">
-              <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Avatar sx={{ bgcolor: 'info.main' }}>
+              <CardContent
+                sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              >
+                <Avatar sx={{ bgcolor: "info.main" }}>
                   <Schedule />
                 </Avatar>
                 <Box>
@@ -79,10 +97,12 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
                 </Box>
               </CardContent>
             </Card>
-            
+
             <Card variant="outlined">
-              <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Avatar sx={{ bgcolor: 'warning.main' }}>
+              <CardContent
+                sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              >
+                <Avatar sx={{ bgcolor: "warning.main" }}>
                   <WbSunny />
                 </Avatar>
                 <Box>
@@ -97,8 +117,10 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
             </Card>
 
             <Card variant="outlined">
-              <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Avatar sx={{ bgcolor: 'success.main' }}>
+              <CardContent
+                sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              >
+                <Avatar sx={{ bgcolor: "success.main" }}>
                   <StickyNote2 />
                 </Avatar>
                 <Box>
@@ -116,19 +138,49 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
       ),
     },
     {
-      title: 'Grid de Aplicativos',
+      title: "Grid de Aplicativos",
       content: (
-        <Box sx={{ py: 2, textAlign: 'center' }}>
+        <Box sx={{ py: 2, textAlign: "center" }}>
           <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
             Acesso rápido aos seus sites favoritos
           </Typography>
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, maxWidth: 300, mx: 'auto', mb: 3 }}>
-            {['YouTube', 'Gmail', 'WhatsApp', 'Netflix', 'Spotify', 'Instagram', 'Amazon', 'Facebook'].map((app, index) => (
-              <Card key={app} variant="outlined" sx={{ p: 1, textAlign: 'center', minHeight: 60 }}>
-                <Avatar sx={{ width: 24, height: 24, mx: 'auto', mb: 0.5, fontSize: '0.7rem' }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 1,
+              maxWidth: 300,
+              mx: "auto",
+              mb: 3,
+            }}
+          >
+            {[
+              "YouTube",
+              "Gmail",
+              "WhatsApp",
+              "Netflix",
+              "Spotify",
+              "Instagram",
+              "Amazon",
+              "Facebook",
+            ].map((app, index) => (
+              <Card
+                key={app}
+                variant="outlined"
+                sx={{ p: 1, textAlign: "center", minHeight: 60 }}
+              >
+                <Avatar
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    mx: "auto",
+                    mb: 0.5,
+                    fontSize: "0.7rem",
+                  }}
+                >
                   {app.charAt(0)}
                 </Avatar>
-                <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>
+                <Typography variant="caption" sx={{ fontSize: "0.6rem" }}>
                   {app}
                 </Typography>
               </Card>
@@ -141,14 +193,15 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
       ),
     },
     {
-      title: 'Como você gostaria de ser chamado?',
+      title: "Como você gostaria de ser chamado?",
       content: (
-        <Box sx={{ py: 3, textAlign: 'center' }}>
+        <Box sx={{ py: 3, textAlign: "center" }}>
           <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
             Personalize sua experiência
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-            Digite seu nome para receber saudações personalizadas baseadas na hora do dia.
+            Digite seu nome para receber saudações personalizadas baseadas na
+            hora do dia.
           </Typography>
           <TextField
             fullWidth
@@ -157,11 +210,15 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Como gostaria de ser chamado?"
             variant="outlined"
-            sx={{ maxWidth: 300, mx: 'auto' }}
+            sx={{ maxWidth: 300, mx: "auto" }}
             autoFocus
           />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2, fontStyle: 'italic' }}>
-            Exemplo: "Bom dia, {userName || 'João'} 👋"
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 2, fontStyle: "italic" }}
+          >
+            Exemplo: "Bom dia, {userName || "João"} 👋"
           </Typography>
         </Box>
       ),
@@ -171,9 +228,9 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       // Última etapa - finalizar onboarding
-      const finalUserName = userName.trim() || 'Usuário';
-      localStorage.setItem('tabflex-user-name', finalUserName);
-      localStorage.setItem('tabflex-onboarding-completed', 'true');
+      const finalUserName = userName.trim() || "Usuário";
+      localStorage.setItem("tabflex-user-name", finalUserName);
+      localStorage.setItem("tabflex-onboarding-completed", "true");
       onComplete(finalUserName);
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -196,7 +253,7 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
       PaperProps={{
         sx: {
           borderRadius: 3,
-          overflow: 'visible',
+          overflow: "visible",
         },
       }}
     >
@@ -209,14 +266,18 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
           ))}
         </Stepper>
 
-        <Typography variant="h5" gutterBottom sx={{ textAlign: 'center', fontWeight: 600 }}>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{ textAlign: "center", fontWeight: 600 }}
+        >
           {steps[activeStep].title}
         </Typography>
 
         {steps[activeStep].content}
       </DialogContent>
 
-      <DialogActions sx={{ px: 4, pb: 3, justifyContent: 'space-between' }}>
+      <DialogActions sx={{ px: 4, pb: 3, justifyContent: "space-between" }}>
         <Button
           onClick={handleBack}
           disabled={isFirstStep}
@@ -233,7 +294,7 @@ const OnboardingDialog = ({ open, onClose, onComplete }) => {
           disabled={isLastStep && !userName.trim()}
           sx={{ minWidth: 120 }}
         >
-          {isLastStep ? 'Começar!' : 'Próximo'}
+          {isLastStep ? "Começar!" : "Próximo"}
         </Button>
       </DialogActions>
     </Dialog>

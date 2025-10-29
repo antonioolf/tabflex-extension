@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 
 const GreetingFooter = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [userName, setUserName] = useState('Usuário');
+  const [userName, setUserName] = useState("Usuário");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -12,7 +12,7 @@ const GreetingFooter = () => {
     }, 60000); // Atualizar a cada minuto
 
     // Carregar o nome do usuário do localStorage
-    const savedUserName = localStorage.getItem('tabflex-user-name');
+    const savedUserName = localStorage.getItem("tabflex-user-name");
     if (savedUserName) {
       setUserName(savedUserName);
     }

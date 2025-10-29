@@ -51,7 +51,7 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
           <IconButton
             size="small"
             onClick={handleClick}
-            sx={{ 
+            sx={{
               color: "rgba(255, 255, 255, 0.8)",
               "&:hover": {
                 color: "white",

@@ -15,13 +15,13 @@ import Shortcuts from "./Shortcuts";
 import OnboardingDialog from "./OnboardingDialog";
 
 const NewTabPage = () => {
-  const { 
-    shortcuts, 
+  const {
+    shortcuts,
     headerShortcuts,
-    addShortcut, 
-    editShortcut, 
+    addShortcut,
+    editShortcut,
     removeShortcut,
-    toggleHeaderFixed 
+    toggleHeaderFixed,
   } = useShortcuts();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,7 +36,9 @@ const NewTabPage = () => {
 
   // Verificar se é a primeira vez do usuário
   useEffect(() => {
-    const onboardingCompleted = localStorage.getItem('tabflex-onboarding-completed');
+    const onboardingCompleted = localStorage.getItem(
+      "tabflex-onboarding-completed"
+    );
     if (!onboardingCompleted) {
       setOnboardingOpen(true);
     }
