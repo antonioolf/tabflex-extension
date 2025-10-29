@@ -31,13 +31,12 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
           target="_blank"
           rel="noopener noreferrer"
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: "text.primary",
             textDecoration: "none",
             fontSize: "0.875rem",
             cursor: "pointer",
             "&:hover": {
-              color: "white",
-              textDecoration: "underline",
+              color: "primary.main",
             },
           }}
         >
@@ -52,10 +51,10 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
             size="small"
             onClick={handleClick}
             sx={{
-              color: "rgba(255, 255, 255, 0.8)",
+              color: "text.primary",
               "&:hover": {
-                color: "white",
-                bgcolor: "rgba(255, 255, 255, 0.1)",
+                // Cor do texto ao passar o mouse
+                color: "primary.main",
               },
             }}
           >
