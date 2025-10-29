@@ -143,7 +143,7 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
         ) : (
           <>
             <Avatar
-              src={getIcon(app.url)}
+              src={app.customIcon || getIcon(app.url)}
               sx={{
                 width: 32,
                 height: 32,

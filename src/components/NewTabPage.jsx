@@ -8,6 +8,7 @@ import ThemeDrawer from "./ThemeDrawer";
 import WidgetDrawer from "./WidgetDrawer";
 import TopHeader from "./TopHeader";
 import SidebarWidgets from "./SidebarWidgets";
+import RightSidebar from "./RightSidebar";
 import AppGrid from "./AppGrid";
 import SearchBar from "./SearchBar";
 import GreetingFooter from "./GreetingFooter";
@@ -70,7 +71,10 @@ const NewTabPage = () => {
         toggleHeaderFixed={toggleHeaderFixed}
       />
       {/* Widgets da barra lateral */}
-      <SidebarWidgets
+      <SidebarWidgets />
+
+      {/* Botões do lado direito */}
+      <RightSidebar 
         onBookmarksClick={() => setBookmarksOpen(true)}
         onThemeClick={() => setThemeOpen(true)}
       />{" "}

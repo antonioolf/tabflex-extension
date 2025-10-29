@@ -15,11 +15,9 @@ import {
   CloudySnowing,
   Edit,
   Save,
-  BookmarkBorder,
-  Palette,
 } from "@mui/icons-material";
 
-const SidebarWidgets = ({ onBookmarksClick, onThemeClick }) => {
+const SidebarWidgets = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [notes, setNotes] = useState("Comprar leite");
   const [isEditingNotes, setIsEditingNotes] = useState(false);
@@ -217,56 +215,6 @@ const SidebarWidgets = ({ onBookmarksClick, onThemeClick }) => {
           )}
         </CardContent>
       </Card>
-
-      {/* Botão de Bookmarks */}
-      <Button
-        variant="outlined"
-        startIcon={<BookmarkBorder />}
-        onClick={onBookmarksClick}
-        sx={{
-          bgcolor: "background.paper",
-          backdropFilter: "blur(10px)",
-          borderRadius: 4,
-          boxShadow: (theme) => theme.shadows[8],
-          border: 1,
-          borderColor: "divider",
-          color: "text.primary",
-          textTransform: "none",
-          fontWeight: 500,
-          py: 1.5,
-          "&:hover": {
-            bgcolor: "action.hover",
-            boxShadow: (theme) => theme.shadows[12],
-          },
-        }}
-      >
-        Bookmarks
-      </Button>
-
-      {/* Botão de Temas */}
-      <Button
-        variant="outlined"
-        startIcon={<Palette />}
-        onClick={onThemeClick}
-        sx={{
-          bgcolor: "background.paper",
-          backdropFilter: "blur(10px)",
-          borderRadius: 4,
-          boxShadow: (theme) => theme.shadows[8],
-          border: 1,
-          borderColor: "divider",
-          color: "text.primary",
-          textTransform: "none",
-          fontWeight: 500,
-          py: 1.5,
-          "&:hover": {
-            bgcolor: "action.hover",
-            boxShadow: (theme) => theme.shadows[12],
-          },
-        }}
-      >
-        Temas
-      </Button>
     </Box>
   );
 };
