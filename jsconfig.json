@@ -3,5 +3,7 @@
     "baseUrl": "./src",
     "checkJs": true,
     "jsx": "react",
-  }
+    "typeRoots": ["./src/types"]
+  },
+  "include": ["src/**/*"]
 }
