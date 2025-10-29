@@ -66,7 +66,7 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
     if (name && url) {
       const newShortcut = {
         name,
-        url,
+        url: url.startsWith("http") ? url : `https://${url}`,
         ...(customIcon && { customIcon }),
         ...(isHeader && { type: "header", fixed: isFixed }),
       };
@@ -103,6 +103,7 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
           variant="outlined"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
+          placeholder="example.com"
           sx={{ mb: 2 }}
         />
 

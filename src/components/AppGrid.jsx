@@ -7,43 +7,17 @@ import {
   Avatar,
   Typography,
   IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
   Menu,
   MenuItem,
 } from "@mui/material";
 import { Add, MoreVert } from "@mui/icons-material";
 
 const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [newApp, setNewApp] = useState({ name: "", url: "" });
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [selectedApp, setSelectedApp] = useState(null);
 
   const handleAppClick = (url) => {
     window.open(url, "_blank");
-  };
-
-  const handleAddApp = () => {
-    setDialogOpen(true);
-  };
-
-  const handleSaveApp = () => {
-    if (newApp.name && newApp.url) {
-      const appData = {
-        name: newApp.name,
-        url: newApp.url.startsWith("http")
-          ? newApp.url
-          : `https://${newApp.url}`,
-      };
-      onAdd(appData);
-      setNewApp({ name: "", url: "" });
-      setDialogOpen(false);
-    }
   };
 
   const handleMenuClick = (event, app) => {
@@ -119,7 +93,7 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
       }}
     >
       <CardActionArea
-        onClick={isAddButton ? handleAddApp : () => handleAppClick(app.url)}
+        onClick={isAddButton ? onAdd : () => handleAppClick(app.url)}
         sx={{
           height: "100%",
           display: "flex",
@@ -241,43 +215,6 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
           <Typography>Remove</Typography>
         </MenuItem>
       </Menu>
-
-      {/* Dialog para adicionar novo app */}
-      <Dialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>Add New Site</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Site Name"
-            fullWidth
-            variant="outlined"
-            value={newApp.name}
-            onChange={(e) => setNewApp({ ...newApp, name: e.target.value })}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Site URL"
-            fullWidth
-            variant="outlined"
-            value={newApp.url}
-            onChange={(e) => setNewApp({ ...newApp, url: e.target.value })}
-            placeholder="example.com"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleSaveApp} variant="contained">
-            Add Site
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };
