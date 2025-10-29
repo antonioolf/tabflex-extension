@@ -1,13 +1,7 @@
 // src/components/RightSidebar.jsx
 import React from "react";
-import {
-  Box,
-  Button,
-} from "@mui/material";
-import {
-  BookmarkBorder,
-  Palette,
-} from "@mui/icons-material";
+import { Box, Button } from "@mui/material";
+import { BookmarkBorder, Palette } from "@mui/icons-material";
 
 const RightSidebar = ({ onBookmarksClick, onThemeClick }) => {
   return (

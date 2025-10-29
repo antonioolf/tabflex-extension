@@ -72,9 +72,8 @@ const NewTabPage = () => {
       />
       {/* Widgets da barra lateral */}
       <SidebarWidgets />
-
       {/* Botões do lado direito */}
-      <RightSidebar 
+      <RightSidebar
         onBookmarksClick={() => setBookmarksOpen(true)}
         onThemeClick={() => setThemeOpen(true)}
       />{" "}

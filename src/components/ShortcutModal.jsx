@@ -48,7 +48,7 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const base64String = e.target.result;
-        if (typeof base64String === 'string') {
+        if (typeof base64String === "string") {
           setCustomIcon(base64String);
           setIconPreview(base64String);
         }
@@ -114,10 +114,7 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             {iconPreview ? (
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Avatar
-                  src={iconPreview}
-                  sx={{ width: 48, height: 48 }}
-                />
+                <Avatar src={iconPreview} sx={{ width: 48, height: 48 }} />
                 <IconButton
                   size="small"
                   onClick={handleRemoveImage}
@@ -144,7 +141,8 @@ const ShortcutModal = ({ open, onClose, onSubmit, shortcut }) => {
             )}
           </Box>
           <Typography variant="caption" color="text.secondary">
-            Se não escolher uma imagem, será usado o favicon do site automaticamente
+            Se não escolher uma imagem, será usado o favicon do site
+            automaticamente
           </Typography>
         </Box>
 

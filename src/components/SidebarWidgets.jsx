@@ -9,13 +9,7 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import {
-  WbSunny,
-  Cloud,
-  CloudySnowing,
-  Edit,
-  Save,
-} from "@mui/icons-material";
+import { WbSunny, Cloud, CloudySnowing, Edit, Save } from "@mui/icons-material";
 
 const SidebarWidgets = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
