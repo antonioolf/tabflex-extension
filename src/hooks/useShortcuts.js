@@ -15,10 +15,20 @@ export const useShortcuts = () => {
     } else {
       // Atalhos padrão
       const defaultShortcuts = [
-        { id: 1, name: "YouTube", url: "https://www.youtube.com" },
-        { id: 2, name: "Gmail", url: "https://mail.google.com" },
-        { id: 3, name: "WhatsApp", url: "https://web.whatsapp.com" },
-        { id: 4, name: "Wikipedia", url: "https://www.wikipedia.org" },
+        { id: 1, name: "Play Console", url: "https://play.google.com/console" },
+        { id: 2, name: "ChatGpt", url: "https://chat.openai.com" },
+        { id: 3, name: "Gemini", url: "https://gemini.google.com" },
+        { id: 4, name: "Firebase", url: "https://console.firebase.google.com" },
+        { id: 5, name: "Manus", url: "https://manus.ai" },
+        { id: 6, name: "DeepSeek", url: "https://deepseek.ai" },
+        { id: 7, name: "Supabase", url: "https://app.supabase.com" },
+        { id: 8, name: "Admob", url: "https://apps.admob.com" },
+        { id: 9, name: "Google Ads", url: "https://ads.google.com" },
+        { id: 10, name: "Workana", url: "https://www.workana.com" },
+        { id: 11, name: "YouTube", url: "https://www.youtube.com" },
+        { id: 12, name: "Gmail", url: "https://mail.google.com" },
+        { id: 13, name: "WhatsApp", url: "https://web.whatsapp.com" },
+        { id: 14, name: "Wikipedia", url: "https://www.wikipedia.org" },
       ];
 
       // Header shortcuts padrão
