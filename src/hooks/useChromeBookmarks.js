@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export const useChromeBookmarks = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Verificar se estamos em uma extensão do Chrome
   // @ts-ignore
@@ -25,8 +26,11 @@ export const useChromeBookmarks = () => {
       loadChromeBookmarks();
       setupChromeListeners();
     } else {
-      console.log("⚠️ API do Chrome não disponível, usando fallback...");
-      loadFallbackBookmarks();
+      console.log("❌ API do Chrome não disponível");
+      setError(
+        "API do Chrome não disponível. Esta funcionalidade só funciona quando carregada como extensão do Chrome."
+      );
+      setLoading(false);
     }
 
     return () => {
@@ -40,6 +44,7 @@ export const useChromeBookmarks = () => {
     try {
       console.log("📚 Tentando carregar bookmarks do Chrome...");
       setLoading(true);
+      setError(null);
       // @ts-ignore
       const tree = await window.chrome.bookmarks.getTree();
       console.log("📚 Árvore de bookmarks recebida:", tree);
@@ -52,81 +57,10 @@ export const useChromeBookmarks = () => {
       console.log("✅ Bookmarks carregados com sucesso!");
     } catch (error) {
       console.error("❌ Erro ao carregar bookmarks do Chrome:", error);
-      loadFallbackBookmarks();
+      setError("Erro ao carregar bookmarks do Chrome: " + error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const loadFallbackBookmarks = () => {
-    const saved = localStorage.getItem("tabflex-bookmarks");
-    if (saved) {
-      setBookmarks(JSON.parse(saved));
-    } else {
-      // Bookmarks padrão organizados em pastas (fallback)
-      const defaultBookmarks = [
-        {
-          id: "1",
-          title: "Barra de favoritos",
-          children: [
-            {
-              id: "2",
-              title: "Google",
-              url: "https://www.google.com",
-            },
-            {
-              id: "3",
-              title: "YouTube",
-              url: "https://www.youtube.com",
-            },
-            {
-              id: "4",
-              title: "GitHub",
-              url: "https://github.com",
-            },
-          ],
-        },
-        {
-          id: "5",
-          title: "Trabalho",
-          children: [
-            {
-              id: "6",
-              title: "Gmail",
-              url: "https://mail.google.com",
-            },
-            {
-              id: "7",
-              title: "Google Drive",
-              url: "https://drive.google.com",
-            },
-            {
-              id: "8",
-              title: "Desenvolvimento",
-              children: [
-                {
-                  id: "9",
-                  title: "Stack Overflow",
-                  url: "https://stackoverflow.com",
-                },
-                {
-                  id: "10",
-                  title: "MDN Web Docs",
-                  url: "https://developer.mozilla.org",
-                },
-              ],
-            },
-          ],
-        },
-      ];
-
-      setBookmarks(defaultBookmarks);
-      localStorage.setItem(
-        "tabflex-bookmarks",
-        JSON.stringify(defaultBookmarks)
-      );
-    }
-    setLoading(false);
   };
 
   const setupChromeListeners = () => {
@@ -172,212 +106,105 @@ export const useChromeBookmarks = () => {
   };
 
   const addBookmark = async (bookmark, parentId = null) => {
-    if (isChromeExtension) {
-      try {
-        // Se parentId não for fornecido, usar a pasta "Outros favoritos"
-        if (!parentId) {
-          // @ts-ignore
-          const tree = await window.chrome.bookmarks.getTree();
-          parentId = findOtherBookmarksFolder(tree)?.id || "2"; // "2" é geralmente "Outros favoritos"
-        }
+    if (!isChromeExtension) {
+      console.warn(
+        "API do Chrome não disponível. Não é possível adicionar bookmark."
+      );
+      return;
+    }
 
+    try {
+      // Se parentId não for fornecido, usar a pasta "Outros favoritos"
+      if (!parentId) {
         // @ts-ignore
-        await window.chrome.bookmarks.create({
-          parentId: parentId,
-          title: bookmark.title || bookmark.name,
-          url: bookmark.url,
-        });
-
-        // Os listeners irão atualizar automaticamente
-      } catch (error) {
-        console.error("Erro ao adicionar bookmark:", error);
+        const tree = await window.chrome.bookmarks.getTree();
+        parentId = findOtherBookmarksFolder(tree)?.id || "2"; // "2" é geralmente "Outros favoritos"
       }
-    } else {
-      // Fallback para localStorage
-      addBookmarkFallback(bookmark, parentId);
+
+      // @ts-ignore
+      await window.chrome.bookmarks.create({
+        parentId: parentId,
+        title: bookmark.title || bookmark.name,
+        url: bookmark.url,
+      });
+
+      // Os listeners irão atualizar automaticamente
+    } catch (error) {
+      console.error("Erro ao adicionar bookmark:", error);
     }
   };
 
   const addFolder = async (folderName, parentId = null) => {
-    if (isChromeExtension) {
-      try {
-        if (!parentId) {
-          // @ts-ignore
-          const tree = await window.chrome.bookmarks.getTree();
-          parentId = findOtherBookmarksFolder(tree)?.id || "2";
-        }
+    if (!isChromeExtension) {
+      console.warn(
+        "API do Chrome não disponível. Não é possível adicionar pasta."
+      );
+      return;
+    }
 
+    try {
+      if (!parentId) {
         // @ts-ignore
-        await window.chrome.bookmarks.create({
-          parentId: parentId,
-          title: folderName,
-        });
-      } catch (error) {
-        console.error("Erro ao adicionar pasta:", error);
+        const tree = await window.chrome.bookmarks.getTree();
+        parentId = findOtherBookmarksFolder(tree)?.id || "2";
       }
-    } else {
-      addFolderFallback(folderName, parentId);
+
+      // @ts-ignore
+      await window.chrome.bookmarks.create({
+        parentId: parentId,
+        title: folderName,
+      });
+    } catch (error) {
+      console.error("Erro ao adicionar pasta:", error);
     }
   };
 
   const removeBookmark = async (id) => {
-    if (isChromeExtension) {
-      try {
-        // Verificar se é uma pasta e usar removeTree se necessário
+    if (!isChromeExtension) {
+      console.warn(
+        "API do Chrome não disponível. Não é possível remover bookmark."
+      );
+      return;
+    }
+
+    try {
+      // Verificar se é uma pasta e usar removeTree se necessário
+      // @ts-ignore
+      const [bookmark] = await window.chrome.bookmarks.get(id);
+      if (bookmark.children) {
         // @ts-ignore
-        const [bookmark] = await window.chrome.bookmarks.get(id);
-        if (bookmark.children) {
-          // @ts-ignore
-          await window.chrome.bookmarks.removeTree(id);
-        } else {
-          // @ts-ignore
-          await window.chrome.bookmarks.remove(id);
-        }
-      } catch (error) {
-        console.error("Erro ao remover bookmark:", error);
+        await window.chrome.bookmarks.removeTree(id);
+      } else {
+        // @ts-ignore
+        await window.chrome.bookmarks.remove(id);
       }
-    } else {
-      removeBookmarkFallback(id);
+    } catch (error) {
+      console.error("Erro ao remover bookmark:", error);
     }
   };
 
   const editBookmark = async (id, updatedData) => {
-    if (isChromeExtension) {
-      try {
-        const changes = {};
-        if (updatedData.title || updatedData.name) {
-          changes.title = updatedData.title || updatedData.name;
-        }
-        if (updatedData.url) {
-          changes.url = updatedData.url;
-        }
+    if (!isChromeExtension) {
+      console.warn(
+        "API do Chrome não disponível. Não é possível editar bookmark."
+      );
+      return;
+    }
 
-        // @ts-ignore
-        await window.chrome.bookmarks.update(id, changes);
-      } catch (error) {
-        console.error("Erro ao editar bookmark:", error);
+    try {
+      const changes = {};
+      if (updatedData.title || updatedData.name) {
+        changes.title = updatedData.title || updatedData.name;
       }
-    } else {
-      editBookmarkFallback(id, updatedData);
+      if (updatedData.url) {
+        changes.url = updatedData.url;
+      }
+
+      // @ts-ignore
+      await window.chrome.bookmarks.update(id, changes);
+    } catch (error) {
+      console.error("Erro ao editar bookmark:", error);
     }
-  };
-
-  // Funções auxiliares para localStorage (fallback)
-  const addBookmarkFallback = (bookmark, parentId) => {
-    const newBookmark = {
-      ...bookmark,
-      id: Date.now().toString(),
-      title: bookmark.title || bookmark.name,
-    };
-
-    if (parentId) {
-      const addToFolder = (items) => {
-        return items.map((item) => {
-          if (item.id === parentId && item.children) {
-            return {
-              ...item,
-              children: [...(item.children || []), newBookmark],
-            };
-          } else if (item.children) {
-            return {
-              ...item,
-              children: addToFolder(item.children),
-            };
-          }
-          return item;
-        });
-      };
-      const updatedBookmarks = addToFolder(bookmarks);
-      setBookmarks(updatedBookmarks);
-      localStorage.setItem(
-        "tabflex-bookmarks",
-        JSON.stringify(updatedBookmarks)
-      );
-    } else {
-      const updatedBookmarks = [...bookmarks, newBookmark];
-      setBookmarks(updatedBookmarks);
-      localStorage.setItem(
-        "tabflex-bookmarks",
-        JSON.stringify(updatedBookmarks)
-      );
-    }
-  };
-
-  const addFolderFallback = (folderName, parentId) => {
-    const newFolder = {
-      id: Date.now().toString(),
-      title: folderName,
-      children: [],
-    };
-
-    if (parentId) {
-      const addToParent = (items) => {
-        return items.map((item) => {
-          if (item.id === parentId && item.children) {
-            return {
-              ...item,
-              children: [...(item.children || []), newFolder],
-            };
-          } else if (item.children) {
-            return {
-              ...item,
-              children: addToParent(item.children),
-            };
-          }
-          return item;
-        });
-      };
-      const updatedBookmarks = addToParent(bookmarks);
-      setBookmarks(updatedBookmarks);
-      localStorage.setItem(
-        "tabflex-bookmarks",
-        JSON.stringify(updatedBookmarks)
-      );
-    } else {
-      const updatedBookmarks = [...bookmarks, newFolder];
-      setBookmarks(updatedBookmarks);
-      localStorage.setItem(
-        "tabflex-bookmarks",
-        JSON.stringify(updatedBookmarks)
-      );
-    }
-  };
-
-  const removeBookmarkFallback = (id) => {
-    const removeFromItems = (items) => {
-      return items.filter((item) => {
-        if (item.id === id) {
-          return false;
-        }
-        if (item.children) {
-          item.children = removeFromItems(item.children);
-        }
-        return true;
-      });
-    };
-    const updatedBookmarks = removeFromItems(bookmarks);
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("tabflex-bookmarks", JSON.stringify(updatedBookmarks));
-  };
-
-  const editBookmarkFallback = (id, updatedData) => {
-    const updateInItems = (items) => {
-      return items.map((item) => {
-        if (item.id === id) {
-          return { ...item, ...updatedData };
-        }
-        if (item.children) {
-          return {
-            ...item,
-            children: updateInItems(item.children),
-          };
-        }
-        return item;
-      });
-    };
-    const updatedBookmarks = updateInItems(bookmarks);
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("tabflex-bookmarks", JSON.stringify(updatedBookmarks));
   };
 
   // Função auxiliar para encontrar a pasta "Outros favoritos"
@@ -418,6 +245,9 @@ export const useChromeBookmarks = () => {
   return {
     bookmarks,
     loading,
+    error: !isChromeExtension
+      ? "Esta funcionalidade só está disponível quando executado como extensão do Chrome"
+      : null,
     addBookmark,
     addFolder,
     removeBookmark,

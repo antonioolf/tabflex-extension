@@ -306,6 +306,7 @@ const BookmarkDrawer = ({ open, onClose }) => {
   const {
     bookmarks,
     loading,
+    error,
     addBookmark,
     addFolder,
     removeBookmark,
@@ -420,6 +421,7 @@ const BookmarkDrawer = ({ open, onClose }) => {
                 startIcon={<Add />}
                 onClick={handleAddBookmark}
                 fullWidth
+                disabled={!isChromeExtension}
               >
                 Favorito
               </Button>
@@ -429,6 +431,7 @@ const BookmarkDrawer = ({ open, onClose }) => {
                 startIcon={<CreateNewFolder />}
                 onClick={handleAddFolder}
                 fullWidth
+                disabled={!isChromeExtension}
               >
                 Pasta
               </Button>
@@ -436,7 +439,23 @@ const BookmarkDrawer = ({ open, onClose }) => {
           </Box>
 
           <Box sx={{ height: "calc(100vh - 160px)", overflow: "auto" }}>
-            {loading ? (
+            {error ? (
+              <Box
+                sx={{
+                  p: 3,
+                  textAlign: "center",
+                  color: "warning.main",
+                }}
+              >
+                <Typography variant="body2" sx={{ mb: 2 }}>
+                  ⚠️ {error}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Para acessar seus favoritos do Chrome, carregue esta aplicação
+                  como extensão.
+                </Typography>
+              </Box>
+            ) : loading ? (
               <Box
                 sx={{
                   display: "flex",
