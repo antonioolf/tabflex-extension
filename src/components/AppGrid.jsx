@@ -1,5 +1,5 @@
 // src/components/AppGrid.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -15,20 +15,17 @@ import {
   TextField,
   Menu,
   MenuItem,
-} from '@mui/material';
-import {
-  Add,
-  MoreVert,
-} from '@mui/icons-material';
+} from "@mui/material";
+import { Add, MoreVert } from "@mui/icons-material";
 
 const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [newApp, setNewApp] = useState({ name: '', url: '' });
+  const [newApp, setNewApp] = useState({ name: "", url: "" });
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [selectedApp, setSelectedApp] = useState(null);
 
   const handleAppClick = (url) => {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   const handleAddApp = () => {
@@ -39,10 +36,12 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
     if (newApp.name && newApp.url) {
       const appData = {
         name: newApp.name,
-        url: newApp.url.startsWith('http') ? newApp.url : `https://${newApp.url}`,
+        url: newApp.url.startsWith("http")
+          ? newApp.url
+          : `https://${newApp.url}`,
       };
       onAdd(appData);
-      setNewApp({ name: '', url: '' });
+      setNewApp({ name: "", url: "" });
       setDialogOpen(false);
     }
   };
@@ -101,39 +100,43 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
     <Card
       sx={{
         borderRadius: 3,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        transition: 'all 0.3s ease',
-        '&:hover': {
-          transform: 'translateY(-2px)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        transition: "all 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-2px)",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
         },
         height: 80,
         width: 80,
-        bgcolor: isAddButton ? 'grey.100' : 'background.paper',
-        position: 'relative',
-        '& .shortcut-menu-button': {
-          display: 'none',
+        bgcolor: isAddButton ? "grey.100" : "background.paper",
+        position: "relative",
+        "& .shortcut-menu-button": {
+          display: "none",
         },
-        '&:hover .shortcut-menu-button': {
-          display: 'flex',
+        "&:hover .shortcut-menu-button": {
+          display: "flex",
         },
       }}
     >
       <CardActionArea
         onClick={isAddButton ? handleAddApp : () => handleAppClick(app.url)}
         sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
           p: 1,
         }}
       >
         {isAddButton ? (
           <>
-            <Add sx={{ fontSize: 32, color: 'text.secondary', mb: 0.5 }} />
-            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+            <Add sx={{ fontSize: 32, color: "text.secondary", mb: 0.5 }} />
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ fontSize: "0.65rem" }}
+            >
               Add Site
             </Typography>
           </>
@@ -151,7 +154,7 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
                 onError: (e) => {
                   const target = e.target;
                   if (target instanceof HTMLImageElement) {
-                    target.style.display = 'none';
+                    target.style.display = "none";
                   }
                 },
               }}
@@ -161,10 +164,10 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
             <Typography
               variant="caption"
               sx={{
-                textAlign: 'center',
-                color: 'text.primary',
+                textAlign: "center",
+                color: "text.primary",
                 fontWeight: 500,
-                fontSize: '0.65rem',
+                fontSize: "0.65rem",
                 lineHeight: 1,
               }}
             >
@@ -177,12 +180,13 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
               size="small"
               onClick={(e) => handleMenuClick(e, app)}
               sx={{
-                position: 'absolute',
+                position: "absolute",
                 top: 4,
                 right: 4,
-                bgcolor: 'rgba(255, 255, 255, 0.9)',
-                '&:hover': {
-                  bgcolor: 'rgba(255, 255, 255, 1)',
+                bgcolor: "background.paper",
+                color: "text.primary",
+                "&:hover": {
+                  bgcolor: "action.hover",
                 },
               }}
             >
@@ -198,21 +202,20 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
     <>
       <Box
         sx={{
-          width: '100%',
+          width: "100%",
           maxWidth: 360,
-          mx: 'auto',
+          mx: "auto",
         }}
       >
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
             gap: 2,
           }}
         >
-          {shortcuts && shortcuts.map((app) => (
-            <AppCard key={app.id} app={app} />
-          ))}
+          {shortcuts &&
+            shortcuts.map((app) => <AppCard key={app.id} app={app} />)}
           <AppCard isAddButton app={null} />
         </Box>
       </Box>
@@ -223,12 +226,12 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
         open={Boolean(menuAnchorEl)}
         onClose={handleMenuClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
       >
         <MenuItem onClick={handleEdit}>
@@ -240,7 +243,12 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
       </Menu>
 
       {/* Dialog para adicionar novo app */}
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Add New Site</DialogTitle>
         <DialogContent>
           <TextField

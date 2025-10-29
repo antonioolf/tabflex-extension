@@ -16,9 +16,10 @@ import {
   Edit,
   Save,
   BookmarkBorder,
+  Palette,
 } from "@mui/icons-material";
 
-const SidebarWidgets = ({ onBookmarksClick }) => {
+const SidebarWidgets = ({ onBookmarksClick, onThemeClick }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [notes, setNotes] = useState("Comprar leite");
   const [isEditingNotes, setIsEditingNotes] = useState(false);
@@ -47,13 +48,13 @@ const SidebarWidgets = ({ onBookmarksClick }) => {
   const getWeatherIcon = (condition) => {
     switch (condition) {
       case "sunny":
-        return <WbSunny sx={{ color: "#ffc107" }} />;
+        return <WbSunny sx={{ color: "warning.main" }} />;
       case "cloudy":
-        return <Cloud sx={{ color: "#90a4ae" }} />;
+        return <Cloud sx={{ color: "action.active" }} />;
       case "snowy":
-        return <CloudySnowing sx={{ color: "#81c784" }} />;
+        return <CloudySnowing sx={{ color: "info.main" }} />;
       default:
-        return <WbSunny sx={{ color: "#ffc107" }} />;
+        return <WbSunny sx={{ color: "warning.main" }} />;
     }
   };
 
@@ -88,11 +89,12 @@ const SidebarWidgets = ({ onBookmarksClick }) => {
       {/* Widget de Relógio */}
       <Card
         sx={{
-          bgcolor: "rgba(255, 255, 255, 0.95)",
+          bgcolor: "background.paper",
           backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
         }}
       >
         <CardContent sx={{ p: 2 }}>
@@ -120,11 +122,12 @@ const SidebarWidgets = ({ onBookmarksClick }) => {
       {/* Widget de Clima */}
       <Card
         sx={{
-          bgcolor: "rgba(255, 255, 255, 0.95)",
+          bgcolor: "background.paper",
           backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
         }}
       >
         <CardContent sx={{ p: 2 }}>
@@ -154,11 +157,12 @@ const SidebarWidgets = ({ onBookmarksClick }) => {
       {/* Widget de Notas Rápidas */}
       <Card
         sx={{
-          bgcolor: "rgba(255, 255, 255, 0.95)",
+          bgcolor: "background.paper",
           backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
         }}
       >
         <CardContent sx={{ p: 2 }}>
@@ -220,22 +224,48 @@ const SidebarWidgets = ({ onBookmarksClick }) => {
         startIcon={<BookmarkBorder />}
         onClick={onBookmarksClick}
         sx={{
-          bgcolor: "rgba(255, 255, 255, 0.95)",
+          bgcolor: "background.paper",
           backdropFilter: "blur(10px)",
           borderRadius: 4,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
           color: "text.primary",
           textTransform: "none",
           fontWeight: 500,
           py: 1.5,
           "&:hover": {
-            bgcolor: "rgba(255, 255, 255, 1)",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.15)",
+            bgcolor: "action.hover",
+            boxShadow: (theme) => theme.shadows[12],
           },
         }}
       >
         Bookmarks
+      </Button>
+
+      {/* Botão de Temas */}
+      <Button
+        variant="outlined"
+        startIcon={<Palette />}
+        onClick={onThemeClick}
+        sx={{
+          bgcolor: "background.paper",
+          backdropFilter: "blur(10px)",
+          borderRadius: 4,
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
+          color: "text.primary",
+          textTransform: "none",
+          fontWeight: 500,
+          py: 1.5,
+          "&:hover": {
+            bgcolor: "action.hover",
+            boxShadow: (theme) => theme.shadows[12],
+          },
+        }}
+      >
+        Temas
       </Button>
     </Box>
   );

@@ -12,6 +12,7 @@ import AppGrid from "./AppGrid";
 import SearchBar from "./SearchBar";
 import GreetingFooter from "./GreetingFooter";
 import OnboardingDialog from "./OnboardingDialog";
+import { useAppTheme } from "../context/ThemeContext.jsx";
 
 const NewTabPage = () => {
   const {
@@ -22,6 +23,8 @@ const NewTabPage = () => {
     removeShortcut,
     toggleHeaderFixed,
   } = useShortcuts();
+
+  const { currentGradient } = useAppTheme();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState(null);
@@ -51,9 +54,9 @@ const NewTabPage = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: "#f0f2f5",
+        bgcolor: "background.default",
+        backgroundImage: currentGradient,
         position: "relative",
-        backgroundImage: "linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)",
         overflow: "hidden",
       }}
     >
@@ -67,7 +70,10 @@ const NewTabPage = () => {
         toggleHeaderFixed={toggleHeaderFixed}
       />
       {/* Widgets da barra lateral */}
-      <SidebarWidgets onBookmarksClick={() => setBookmarksOpen(true)} />{" "}
+      <SidebarWidgets
+        onBookmarksClick={() => setBookmarksOpen(true)}
+        onThemeClick={() => setThemeOpen(true)}
+      />{" "}
       {/* Main Content */}
       <Box
         sx={{

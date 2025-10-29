@@ -38,11 +38,11 @@ const TopHeader = ({
           display: "none",
           width: 32,
           height: 32,
-          bgcolor: "#4285f4",
+          bgcolor: "primary.main",
           cursor: "pointer",
           fontSize: "0.875rem",
           fontWeight: 600,
-          color: "white",
+          color: "primary.contrastText",
           "&:hover": {
             transform: "scale(1.05)",
             transition: "transform 0.2s ease-in-out",

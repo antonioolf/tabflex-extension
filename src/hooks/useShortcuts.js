@@ -98,7 +98,7 @@ export const useShortcuts = () => {
 
   const saveShortcuts = (newShortcuts) => {
     setShortcuts(newShortcuts);
-    localStorage.setItem("tabflex-shortcuts", JSON.stringify(newShortcuts));
+    saveAllShortcuts(newShortcuts, headerShortcuts);
   };
 
   const addShortcut = (shortcut) => {

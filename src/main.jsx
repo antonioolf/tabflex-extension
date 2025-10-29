@@ -1,21 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import NewTabPage from "./components/NewTabPage.jsx";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#1976d2", // Azul do MUI
-    },
-  },
-});
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
+const App = () => {
+  return (
+    <ThemeProvider>
       <CssBaseline />
       <NewTabPage />
     </ThemeProvider>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
   </React.StrictMode>
 );
