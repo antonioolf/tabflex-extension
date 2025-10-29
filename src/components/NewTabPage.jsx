@@ -1,27 +1,23 @@
-import { Box, Snackbar, IconButton } from "@mui/material";
-import {
-  Bookmark as BookmarkIcon,
-  Widgets as WidgetsIcon,
-  Palette as PaletteIcon,
-} from "@mui/icons-material";
+import { Box, Snackbar } from "@mui/material";
 import { useShortcuts } from "../hooks/useShortcuts";
-import Shortcuts from "./Shortcuts";
 import { useState } from "react";
 import ShortcutModal from "./ShortcutModal";
 import BookmarkDrawer from "./BookmarkDrawer";
 import React from "react";
 import ThemeDrawer from "./ThemeDrawer";
 import WidgetDrawer from "./WidgetDrawer";
-import HeaderShortcuts from "./HeaderShortcuts"; // Nova importação
+import TopHeader from "./TopHeader";
+import SidebarWidgets from "./SidebarWidgets";
+import AppGrid from "./AppGrid";
+import SearchBar from "./SearchBar";
+import GreetingFooter from "./GreetingFooter";
 
 const NewTabPage = () => {
   const {
     shortcuts,
-    headerShortcuts, // Novo estado
     addShortcut,
     editShortcut,
     removeShortcut,
-    toggleHeaderFixed, // Nova função
   } = useShortcuts();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,110 +26,94 @@ const NewTabPage = () => {
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [widgetsOpen, setWidgetsOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100vh",
-        paddingTop: "10%",
+        minHeight: "100vh",
+        bgcolor: "#f0f2f5",
         position: "relative",
+        backgroundImage: "linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)",
+        overflow: "hidden",
       }}
     >
-      {/* Adicionar HeaderShortcuts no topo direito */}
-      <HeaderShortcuts
-        headerShortcuts={headerShortcuts}
-        toggleFixed={toggleHeaderFixed}
+      {/* Top Header */}
+      <TopHeader
+        onBookmarksClick={() => setBookmarksOpen(true)}
+        onThemeClick={() => setThemeOpen(true)}
+        onSettingsClick={() => setSettingsOpen(true)}
+        onProfileClick={() => setProfileOpen(true)}
       />
 
-      {/* Botão de Bookmarks (canto superior esquerdo) */}
-      <IconButton
-        sx={{
-          position: "absolute",
-          top: 16,
-          left: 16,
-          color: "text.primary",
-        }}
-        onClick={() => setBookmarksOpen(true)}
-      >
-        <BookmarkIcon />
-      </IconButton>
+      {/* Sidebar Widgets */}
+      <SidebarWidgets />
 
-      {/* Botão de Widgets (canto inferior esquerdo) */}
-      <IconButton
+      {/* Main Content */}
+      <Box
         sx={{
-          position: "absolute",
-          bottom: 16,
-          left: 16,
-          color: "text.primary",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          px: 4,
         }}
-        onClick={() => setWidgetsOpen(true)}
       >
-        <WidgetsIcon />
-      </IconButton>
+        {/* App Grid */}
+        <Box sx={{ mb: 4 }}>
+          <AppGrid />
+        </Box>
 
-      {/* Botão de Customização de Tema (canto inferior direito) */}
-      <IconButton
-        sx={{
-          position: "absolute",
-          bottom: 16,
-          right: 16,
-          color: "text.primary",
-        }}
-        onClick={() => setThemeOpen(true)}
-      >
-        <PaletteIcon />
-      </IconButton>
+        {/* Search Bar */}
+        <SearchBar />
+      </Box>
 
-      {/* Componentes dos Drawers */}
+      {/* Greeting Footer */}
+      <GreetingFooter />
+
+      {/* Drawers */}
       <BookmarkDrawer
         open={bookmarksOpen}
         onClose={() => setBookmarksOpen(false)}
       />
-
-      <WidgetDrawer open={widgetsOpen} onClose={() => setWidgetsOpen(false)} />
-
-      <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
-
-      <Shortcuts
-        shortcuts={shortcuts}
-        onAdd={() => setModalOpen(true)}
-        onEdit={(shortcut) => {
-          setEditingShortcut(shortcut);
-          setModalOpen(true);
-        }}
-        onRemove={(shortcutId) => {
-          removeShortcut(shortcutId);
-          setSnackbarOpen(true);
-        }}
+      
+      <ThemeDrawer
+        open={themeOpen}
+        onClose={() => setThemeOpen(false)}
       />
 
+      <WidgetDrawer
+        open={widgetsOpen}
+        onClose={() => setWidgetsOpen(false)}
+      />
+
+      {/* Legacy Modal - manter para compatibilidade */}
       <ShortcutModal
         open={modalOpen}
         onClose={() => {
           setModalOpen(false);
           setEditingShortcut(null);
         }}
-        onSubmit={(shortcut) => {
+        onSubmit={(data) => {
           if (editingShortcut) {
-            editShortcut(editingShortcut.id, shortcut);
+            editShortcut(editingShortcut.id, data);
           } else {
-            addShortcut(shortcut);
+            addShortcut(data);
           }
           setModalOpen(false);
           setEditingShortcut(null);
+          setSnackbarOpen(true);
         }}
         shortcut={editingShortcut}
       />
 
       <Snackbar
-        message="Shortcut removed"
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        message="Shortcut saved successfully!"
       />
     </Box>
   );
