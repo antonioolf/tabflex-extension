@@ -12,23 +12,12 @@ export const useChromeBookmarks = () => {
     typeof window !== "undefined" && window.chrome && window.chrome.bookmarks;
 
   useEffect(() => {
-    console.log("🔍 Debug - Verificando ambiente:");
-    console.log("  window existe:", typeof window !== "undefined");
-    console.log("  window.chrome existe:", window?.chrome !== undefined);
-    console.log(
-      "  chrome.bookmarks existe:",
-      window?.chrome?.bookmarks !== undefined
-    );
-    console.log("  isChromeExtension:", isChromeExtension);
-
     if (isChromeExtension) {
-      console.log("✅ Carregando bookmarks do Chrome...");
       loadChromeBookmarks();
       setupChromeListeners();
     } else {
-      console.log("❌ API do Chrome não disponível");
       setError(
-        "API do Chrome não disponível. Esta funcionalidade só funciona quando carregada como extensão do Chrome."
+        "Esta funcionalidade só está disponível quando executado como extensão do Chrome"
       );
       setLoading(false);
     }
@@ -42,21 +31,17 @@ export const useChromeBookmarks = () => {
 
   const loadChromeBookmarks = async () => {
     try {
-      console.log("📚 Tentando carregar bookmarks do Chrome...");
       setLoading(true);
       setError(null);
       // @ts-ignore
       const tree = await window.chrome.bookmarks.getTree();
-      console.log("📚 Árvore de bookmarks recebida:", tree);
 
       // Filtrar apenas as pastas principais que o usuário pode ver
       const userBookmarks = tree[0]?.children || [];
-      console.log("📚 Bookmarks do usuário:", userBookmarks);
 
       setBookmarks(userBookmarks);
-      console.log("✅ Bookmarks carregados com sucesso!");
     } catch (error) {
-      console.error("❌ Erro ao carregar bookmarks do Chrome:", error);
+      console.error("Erro ao carregar bookmarks do Chrome:", error);
       setError("Erro ao carregar bookmarks do Chrome: " + error.message);
     } finally {
       setLoading(false);
@@ -107,9 +92,6 @@ export const useChromeBookmarks = () => {
 
   const addBookmark = async (bookmark, parentId = null) => {
     if (!isChromeExtension) {
-      console.warn(
-        "API do Chrome não disponível. Não é possível adicionar bookmark."
-      );
       return;
     }
 
@@ -127,8 +109,6 @@ export const useChromeBookmarks = () => {
         title: bookmark.title || bookmark.name,
         url: bookmark.url,
       });
-
-      // Os listeners irão atualizar automaticamente
     } catch (error) {
       console.error("Erro ao adicionar bookmark:", error);
     }
@@ -136,9 +116,6 @@ export const useChromeBookmarks = () => {
 
   const addFolder = async (folderName, parentId = null) => {
     if (!isChromeExtension) {
-      console.warn(
-        "API do Chrome não disponível. Não é possível adicionar pasta."
-      );
       return;
     }
 
@@ -161,9 +138,6 @@ export const useChromeBookmarks = () => {
 
   const removeBookmark = async (id) => {
     if (!isChromeExtension) {
-      console.warn(
-        "API do Chrome não disponível. Não é possível remover bookmark."
-      );
       return;
     }
 
@@ -185,9 +159,6 @@ export const useChromeBookmarks = () => {
 
   const editBookmark = async (id, updatedData) => {
     if (!isChromeExtension) {
-      console.warn(
-        "API do Chrome não disponível. Não é possível editar bookmark."
-      );
       return;
     }
 
@@ -245,9 +216,7 @@ export const useChromeBookmarks = () => {
   return {
     bookmarks,
     loading,
-    error: !isChromeExtension
-      ? "Esta funcionalidade só está disponível quando executado como extensão do Chrome"
-      : null,
+    error,
     addBookmark,
     addFolder,
     removeBookmark,
