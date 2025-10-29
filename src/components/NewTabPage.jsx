@@ -11,7 +11,6 @@ import SidebarWidgets from "./SidebarWidgets";
 import AppGrid from "./AppGrid";
 import SearchBar from "./SearchBar";
 import GreetingFooter from "./GreetingFooter";
-import Shortcuts from "./Shortcuts";
 import OnboardingDialog from "./OnboardingDialog";
 
 const NewTabPage = () => {
@@ -82,14 +81,9 @@ const NewTabPage = () => {
           px: 4,
         }}
       >
-        {/* App Grid */}
+        {/* App Grid with integrated shortcuts */}
         <Box sx={{ mb: 4 }}>
-          <AppGrid />
-        </Box>
-
-        {/* Legacy Shortcuts with context menu */}
-        <Box sx={{ mb: 4 }}>
-          <Shortcuts
+          <AppGrid 
             shortcuts={shortcuts}
             onAdd={() => setModalOpen(true)}
             onEdit={(shortcut) => {
