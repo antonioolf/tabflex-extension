@@ -8,10 +8,11 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const fixedShortcuts = headerShortcuts.filter((s) => s.fixed);
-  const nonFixedShortcuts = headerShortcuts.filter((s) => !s.fixed);
+  const fixedShortcuts = headerShortcuts?.filter((s) => s.fixed) || [];
+  const nonFixedShortcuts = headerShortcuts?.filter((s) => !s.fixed) || [];
 
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 
@@ -20,28 +21,22 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
   };
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: 16,
-        right: 16,
-        display: "flex",
-        alignItems: "center",
-        gap: 2,
-      }}
-    >
+    <>
+      {/* Fixed shortcuts displayed as links */}
       {fixedShortcuts.map((shortcut) => (
         <Typography
           key={shortcut.id}
           component="a"
           href={shortcut.url}
+          target="_blank"
           rel="noopener noreferrer"
           sx={{
-            color: "text.primary",
+            color: "rgba(255, 255, 255, 0.8)",
             textDecoration: "none",
             fontSize: "0.875rem",
             cursor: "pointer",
             "&:hover": {
+              color: "white",
               textDecoration: "underline",
             },
           }}
@@ -50,43 +45,61 @@ const HeaderShortcuts = ({ headerShortcuts, toggleFixed }) => {
         </Typography>
       ))}
 
-      <IconButton
-        size="small"
-        onClick={handleClick}
-        sx={{ color: "text.primary" }}
-      >
-        <AppsIcon />
-      </IconButton>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        {nonFixedShortcuts.map((shortcut) => (
-          <MenuItem
-            key={shortcut.id}
-            component="a"
-            href={shortcut.url}
-            rel="noopener noreferrer"
-            onClick={() => {
-              handleClose();
-              toggleFixed(shortcut.id);
+      {/* Apps menu button - only show if there are non-fixed shortcuts */}
+      {nonFixedShortcuts.length > 0 && (
+        <>
+          <IconButton
+            size="small"
+            onClick={handleClick}
+            sx={{ 
+              color: "rgba(255, 255, 255, 0.8)",
+              "&:hover": {
+                color: "white",
+                bgcolor: "rgba(255, 255, 255, 0.1)",
+              },
             }}
           >
-            {shortcut.name}
-          </MenuItem>
-        ))}
-      </Menu>
-    </Box>
+            <AppsIcon />
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            {nonFixedShortcuts.map((shortcut) => (
+              <MenuItem
+                key={shortcut.id}
+                component="a"
+                href={shortcut.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  handleClose();
+                  if (toggleFixed) {
+                    toggleFixed(shortcut.id);
+                  }
+                }}
+                sx={{
+                  color: "text.primary",
+                  textDecoration: "none",
+                }}
+              >
+                {shortcut.name}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      )}
+    </>
   );
 };
 

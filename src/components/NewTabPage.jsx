@@ -1,6 +1,6 @@
 import { Box, Snackbar } from "@mui/material";
 import { useShortcuts } from "../hooks/useShortcuts";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ShortcutModal from "./ShortcutModal";
 import BookmarkDrawer from "./BookmarkDrawer";
 import React from "react";
@@ -11,10 +11,18 @@ import SidebarWidgets from "./SidebarWidgets";
 import AppGrid from "./AppGrid";
 import SearchBar from "./SearchBar";
 import GreetingFooter from "./GreetingFooter";
+import Shortcuts from "./Shortcuts";
+import OnboardingDialog from "./OnboardingDialog";
 
 const NewTabPage = () => {
-  const { shortcuts, addShortcut, editShortcut, removeShortcut } =
-    useShortcuts();
+  const { 
+    shortcuts, 
+    headerShortcuts,
+    addShortcut, 
+    editShortcut, 
+    removeShortcut,
+    toggleHeaderFixed 
+  } = useShortcuts();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingShortcut, setEditingShortcut] = useState(null);
@@ -24,6 +32,19 @@ const NewTabPage = () => {
   const [themeOpen, setThemeOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
+
+  // Verificar se é a primeira vez do usuário
+  useEffect(() => {
+    const onboardingCompleted = localStorage.getItem('tabflex-onboarding-completed');
+    if (!onboardingCompleted) {
+      setOnboardingOpen(true);
+    }
+  }, []);
+
+  const handleOnboardingComplete = (userName) => {
+    setOnboardingOpen(false);
+  };
 
   return (
     <Box
@@ -41,6 +62,8 @@ const NewTabPage = () => {
         onThemeClick={() => setThemeOpen(true)}
         onSettingsClick={() => setSettingsOpen(true)}
         onProfileClick={() => setProfileOpen(true)}
+        headerShortcuts={headerShortcuts}
+        toggleHeaderFixed={toggleHeaderFixed}
       />
 
       {/* Sidebar Widgets */}
@@ -60,6 +83,22 @@ const NewTabPage = () => {
         {/* App Grid */}
         <Box sx={{ mb: 4 }}>
           <AppGrid />
+        </Box>
+
+        {/* Legacy Shortcuts with context menu */}
+        <Box sx={{ mb: 4 }}>
+          <Shortcuts
+            shortcuts={shortcuts}
+            onAdd={() => setModalOpen(true)}
+            onEdit={(shortcut) => {
+              setEditingShortcut(shortcut);
+              setModalOpen(true);
+            }}
+            onRemove={(shortcutId) => {
+              removeShortcut(shortcutId);
+              setSnackbarOpen(true);
+            }}
+          />
         </Box>
 
         {/* Search Bar */}
@@ -104,6 +143,13 @@ const NewTabPage = () => {
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         message="Shortcut saved successfully!"
+      />
+
+      {/* Onboarding Dialog */}
+      <OnboardingDialog
+        open={onboardingOpen}
+        onClose={() => setOnboardingOpen(false)}
+        onComplete={handleOnboardingComplete}
       />
     </Box>
   );

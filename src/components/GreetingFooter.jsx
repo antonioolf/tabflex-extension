@@ -4,12 +4,18 @@ import { Box, Typography } from "@mui/material";
 
 const GreetingFooter = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [userName] = useState("João"); // Por enquanto fixo, pode ser configurável futuramente
+  const [userName, setUserName] = useState('Usuário');
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 60000); // Atualizar a cada minuto
+
+    // Carregar o nome do usuário do localStorage
+    const savedUserName = localStorage.getItem('tabflex-user-name');
+    if (savedUserName) {
+      setUserName(savedUserName);
+    }
 
     return () => clearInterval(timer);
   }, []);
