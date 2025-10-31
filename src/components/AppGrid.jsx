@@ -17,7 +17,7 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
   const [selectedApp, setSelectedApp] = useState(null);
 
   const handleAppClick = (url) => {
-    window.open(url, "_blank");
+    window.open(url, "_self");
   };
 
   const handleMenuClick = (event, app) => {
