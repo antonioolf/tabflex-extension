@@ -9,12 +9,192 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Grid,
 } from "@mui/material";
-import { Add, MoreVert } from "@mui/icons-material";
+import { Add, MoreVert, DragIndicator } from "@mui/icons-material";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
+const AppGrid = ({
+  shortcuts,
+  onAdd,
+  onEdit,
+  onRemove,
+  onReorder,
+  columns = 4,
+}) => {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [selectedApp, setSelectedApp] = useState(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      const oldIndex = shortcuts.findIndex((item) => item.id === active.id);
+      const newIndex = shortcuts.findIndex((item) => item.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newOrder = arrayMove(shortcuts, oldIndex, newIndex);
+        onReorder(newOrder);
+      }
+    }
+  };
+
+  // Componente para app card arrastável
+  const SortableAppCard = ({ app }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({ id: app.id });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      opacity: isDragging ? 0.5 : 1,
+    };
+
+    return (
+      <Grid
+        size={{
+          xs: 12 / Math.min(columns, 4),
+          sm: 12 / Math.min(columns, 6),
+          md: 12 / columns,
+        }}
+      >
+        <Card
+          ref={setNodeRef}
+          style={style}
+          sx={{
+            borderRadius: 3,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              transform: isDragging ? undefined : "translateY(-2px)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+            },
+            height: 80,
+            bgcolor: "background.paper",
+            position: "relative",
+            cursor: isDragging ? "grabbing" : "grab",
+            "& .shortcut-menu-button": {
+              display: "none",
+            },
+            "&:hover .shortcut-menu-button": {
+              display: "flex",
+            },
+          }}
+        >
+          <CardActionArea
+            onClick={() => !isDragging && handleAppClick(app.url)}
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              p: 1,
+            }}
+          >
+            <Box
+              {...attributes}
+              {...listeners}
+              sx={{
+                position: "absolute",
+                top: 4,
+                left: 4,
+                color: "text.secondary",
+                cursor: "grab",
+                "&:active": {
+                  cursor: "grabbing",
+                },
+              }}
+            >
+              <DragIndicator fontSize="small" />
+            </Box>
+
+            <Avatar
+              src={app.customIcon || getIcon(app.url)}
+              sx={{
+                width: 32,
+                height: 32,
+                bgcolor: stringToColor(app.name),
+                mb: 0.5,
+              }}
+              imgProps={{
+                onError: (e) => {
+                  const target = e.target;
+                  if (target instanceof HTMLImageElement) {
+                    target.style.display = "none";
+                  }
+                },
+              }}
+            >
+              {app.name.charAt(0)}
+            </Avatar>
+            <Typography
+              variant="caption"
+              sx={{
+                textAlign: "center",
+                color: "text.primary",
+                fontWeight: 500,
+                fontSize: "0.65rem",
+                lineHeight: 1,
+              }}
+            >
+              {app.name}
+            </Typography>
+
+            {/* Menu Button */}
+            <IconButton
+              className="shortcut-menu-button"
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleMenuClick(e, app);
+              }}
+              sx={{
+                position: "absolute",
+                top: 4,
+                right: 4,
+                bgcolor: "background.paper",
+                color: "text.primary",
+                "&:hover": {
+                  bgcolor: "action.hover",
+                },
+              }}
+            >
+              <MoreVert fontSize="small" />
+            </IconButton>
+          </CardActionArea>
+        </Card>
+      </Grid>
+    );
+  };
 
   const handleAppClick = (url) => {
     window.open(url, "_self");
@@ -70,106 +250,50 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
     return color;
   };
 
-  const AppCard = ({ app, isAddButton = false }) => (
-    <Card
-      sx={{
-        borderRadius: 3,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
-        },
-        height: 80,
-        width: 80,
-        bgcolor: isAddButton ? "grey.100" : "background.paper",
-        position: "relative",
-        "& .shortcut-menu-button": {
-          display: "none",
-        },
-        "&:hover .shortcut-menu-button": {
-          display: "flex",
-        },
+  // Botão "Add Site"
+  const AddButton = () => (
+    <Grid
+      size={{
+        xs: 12 / Math.min(columns, 4),
+        sm: 12 / Math.min(columns, 6),
+        md: 12 / columns,
       }}
     >
-      <CardActionArea
-        onClick={isAddButton ? onAdd : () => handleAppClick(app.url)}
+      <Card
         sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          p: 1,
+          borderRadius: 3,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-2px)",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+          },
+          height: 80,
+          bgcolor: "grey.100",
         }}
       >
-        {isAddButton ? (
-          <>
-            <Add sx={{ fontSize: 32, color: "text.secondary", mb: 0.5 }} />
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ fontSize: "0.65rem" }}
-            >
-              Add Site
-            </Typography>
-          </>
-        ) : (
-          <>
-            <Avatar
-              src={app.customIcon || getIcon(app.url)}
-              sx={{
-                width: 32,
-                height: 32,
-                bgcolor: stringToColor(app.name),
-                mb: 0.5,
-              }}
-              imgProps={{
-                onError: (e) => {
-                  const target = e.target;
-                  if (target instanceof HTMLImageElement) {
-                    target.style.display = "none";
-                  }
-                },
-              }}
-            >
-              {app.name.charAt(0)}
-            </Avatar>
-            <Typography
-              variant="caption"
-              sx={{
-                textAlign: "center",
-                color: "text.primary",
-                fontWeight: 500,
-                fontSize: "0.65rem",
-                lineHeight: 1,
-              }}
-            >
-              {app.name}
-            </Typography>
-
-            {/* Menu Button */}
-            <IconButton
-              className="shortcut-menu-button"
-              size="small"
-              onClick={(e) => handleMenuClick(e, app)}
-              sx={{
-                position: "absolute",
-                top: 4,
-                right: 4,
-                bgcolor: "background.paper",
-                color: "text.primary",
-                "&:hover": {
-                  bgcolor: "action.hover",
-                },
-              }}
-            >
-              <MoreVert fontSize="small" />
-            </IconButton>
-          </>
-        )}
-      </CardActionArea>
-    </Card>
+        <CardActionArea
+          onClick={onAdd}
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            p: 1,
+          }}
+        >
+          <Add sx={{ fontSize: 32, color: "text.secondary", mb: 0.5 }} />
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ fontSize: "0.65rem" }}
+          >
+            Add Site
+          </Typography>
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 
   return (
@@ -177,21 +301,27 @@ const AppGrid = ({ shortcuts, onAdd, onEdit, onRemove }) => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 360,
+          maxWidth: { xs: "100%", md: 800 },
           mx: "auto",
         }}
       >
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 2,
-          }}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
         >
-          {shortcuts &&
-            shortcuts.map((app) => <AppCard key={app.id} app={app} />)}
-          <AppCard isAddButton app={null} />
-        </Box>
+          <Grid container spacing={2} columns={12}>
+            <SortableContext
+              items={shortcuts?.map((app) => app.id) || []}
+              strategy={rectSortingStrategy}
+            >
+              {shortcuts?.map((app) => (
+                <SortableAppCard key={app.id} app={app} />
+              ))}
+            </SortableContext>
+            <AddButton />
+          </Grid>
+        </DndContext>
       </Box>
 
       {/* Context Menu */}

@@ -1,9 +1,9 @@
 // src/components/RightSidebar.jsx
 import React from "react";
 import { Box, Button } from "@mui/material";
-import { BookmarkBorder, Palette } from "@mui/icons-material";
+import { BookmarkBorder, Palette, Settings } from "@mui/icons-material";
 
-const RightSidebar = ({ onBookmarksClick, onThemeClick }) => {
+const RightSidebar = ({ onBookmarksClick, onThemeClick, onConfigClick }) => {
   return (
     <Box
       sx={{
@@ -64,6 +64,31 @@ const RightSidebar = ({ onBookmarksClick, onThemeClick }) => {
         }}
       >
         Temas
+      </Button>
+
+      {/* Botão de Configurações */}
+      <Button
+        variant="outlined"
+        startIcon={<Settings />}
+        onClick={onConfigClick}
+        sx={{
+          bgcolor: "background.paper",
+          backdropFilter: "blur(10px)",
+          borderRadius: 4,
+          boxShadow: (theme) => theme.shadows[8],
+          border: 1,
+          borderColor: "divider",
+          color: "text.primary",
+          textTransform: "none",
+          fontWeight: 500,
+          py: 1.5,
+          "&:hover": {
+            bgcolor: "action.hover",
+            boxShadow: (theme) => theme.shadows[12],
+          },
+        }}
+      >
+        Configurar
       </Button>
     </Box>
   );

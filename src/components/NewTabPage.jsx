@@ -1,11 +1,13 @@
 import { Box, Snackbar } from "@mui/material";
 import { useShortcuts } from "../hooks/useShortcuts";
+import { useGridConfig } from "../hooks/useGridConfig";
 import { useState, useEffect } from "react";
 import ShortcutModal from "./ShortcutModal";
 import BookmarkDrawer from "./BookmarkDrawer";
 import React from "react";
 import ThemeDrawer from "./ThemeDrawer";
 import WidgetDrawer from "./WidgetDrawer";
+import ConfigDialog from "./ConfigDialog";
 import TopHeader from "./TopHeader";
 import SidebarWidgets from "./SidebarWidgets";
 import RightSidebar from "./RightSidebar";
@@ -17,13 +19,22 @@ import { useAppTheme } from "../context/ThemeContext.jsx";
 
 const NewTabPage = () => {
   const {
-    shortcuts,
+    shortcuts: originalShortcuts,
     headerShortcuts,
     addShortcut,
     editShortcut,
     removeShortcut,
     toggleHeaderFixed,
   } = useShortcuts();
+
+  // Usar o hook de configuração do grid
+  const {
+    columns,
+    shortcuts,
+    saveColumns,
+    saveShortcutsOrder,
+    updateShortcuts,
+  } = useGridConfig(originalShortcuts);
 
   const { currentGradient } = useAppTheme();
 
@@ -33,9 +44,21 @@ const NewTabPage = () => {
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [widgetsOpen, setWidgetsOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [configOpen, setConfigOpen] = useState(false);
+  const [tempColumns, setTempColumns] = useState(columns);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+
+  // Sincronizar mudanças nos shortcuts originais
+  useEffect(() => {
+    updateShortcuts(originalShortcuts);
+  }, [originalShortcuts, updateShortcuts]);
+
+  // Atualizar tempColumns quando columns muda
+  useEffect(() => {
+    setTempColumns(columns);
+  }, [columns]);
 
   // Verificar se é a primeira vez do usuário
   useEffect(() => {
@@ -76,6 +99,7 @@ const NewTabPage = () => {
       <RightSidebar
         onBookmarksClick={() => setBookmarksOpen(true)}
         onThemeClick={() => setThemeOpen(true)}
+        onConfigClick={() => setConfigOpen(true)}
       />{" "}
       {/* Main Content */}
       <Box
@@ -92,6 +116,7 @@ const NewTabPage = () => {
         <Box sx={{ mb: 4 }}>
           <AppGrid
             shortcuts={shortcuts}
+            columns={columns}
             onAdd={() => setModalOpen(true)}
             onEdit={(shortcut) => {
               setEditingShortcut(shortcut);
@@ -101,6 +126,7 @@ const NewTabPage = () => {
               removeShortcut(shortcutId);
               setSnackbarOpen(true);
             }}
+            onReorder={saveShortcutsOrder}
           />
         </Box>
 
@@ -116,6 +142,17 @@ const NewTabPage = () => {
       />
       <ThemeDrawer open={themeOpen} onClose={() => setThemeOpen(false)} />
       <WidgetDrawer open={widgetsOpen} onClose={() => setWidgetsOpen(false)} />
+      {/* Config Dialog */}
+      <ConfigDialog
+        open={configOpen}
+        onClose={() => {
+          setConfigOpen(false);
+          setTempColumns(columns); // Reset temp value if canceled
+        }}
+        columns={tempColumns}
+        onColumnsChange={setTempColumns}
+        onSave={() => saveColumns(tempColumns)}
+      />
       {/* Legacy Modal - manter para compatibilidade */}
       <ShortcutModal
         open={modalOpen}
