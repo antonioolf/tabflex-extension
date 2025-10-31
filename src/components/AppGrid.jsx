@@ -107,6 +107,12 @@ const AppGrid = ({
             "&:hover .shortcut-menu-button": {
               display: "flex",
             },
+            "& .drag-indicator": {
+              display: "none",
+            },
+            "&:hover .drag-indicator": {
+              display: "flex",
+            },
           }}
         >
           <CardActionArea
@@ -121,6 +127,7 @@ const AppGrid = ({
             }}
           >
             <Box
+              className="drag-indicator"
               {...attributes}
               {...listeners}
               sx={{
